@@ -65,7 +65,8 @@
 firebase.initializeApp(config);
 </script>
 <script type="text/javascript">
-var reason;
+  var reason;
+  var cin=document.getElementById("checkin");
   var x = document.getElementById("formsignup");
     x.style.display = "none";
   var a = document.getElementById("buttonsignup");
@@ -126,6 +127,10 @@ function submitcheckfunct() {
   if (b.style.display == "none") {
       b.style.display = "block";
   }
+ var cin=document.getElementById("checkin");
+ if(cin.style.display=="block"){
+   cin.style.display="none"
+ }
   if (document.getElementById('r1').checked) {
   reason = document.getElementById('r1').value;
 }
