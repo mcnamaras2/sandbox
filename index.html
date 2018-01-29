@@ -65,6 +65,7 @@
 firebase.initializeApp(config);
 </script>
 <script type="text/javascript">
+var reason;
   var x = document.getElementById("formsignup");
     x.style.display = "none";
   var a = document.getElementById("buttonsignup");
@@ -118,7 +119,6 @@ function submitup() {
 
 function submitcheckfunct() {
   var a = document.getElementById("buttonsignup");
-  var reason;
   if (a.style.display == "none") {
       a.style.display = "block";
   }
