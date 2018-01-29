@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <title>Sandbox</title>
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="jumbotron">
+    <h1>Technology Sandbox</h1>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row buttonrow">
+        <div class="col-md-4 signup" align="center">
+          <button onclick="signin()" class="btn" role="button" id="buttonsignup">Sign-Up</button>
+          <div id="formsignup">
+            Name:<br>
+            <input type="text" name="name" id="name"><br>
+            Email:<br>
+            <input type="text" name="lastname" id="email"><br>
+            Print Length:<br>
+            <input type="text" name="lastname" id="printlen"><br>
+            <button onclick="submitup()" class="btn-default" role="button" id="submitupbutton"><a href="https://docs.google.com/spreadsheets/d/11Gy-D8wxOhNPoZno8j8JZ4BAXQZ2t2iO3Cvvu1K4N6o/edit?usp=sharing">Submit</a>
+          </div>
+        </div>
+        <div class="col-md-4 checkin" align="center">
+          <button onclick="check()" class="btn" role="button" id="buttoncheckin">Check-In</button>
+          <div id="formcheck">
+            Reason for visit:<br>
+            <input type="radio" name="reason" id='r1' value="starting print"> start print<br>
+            <input type="radio" name="reason" id='r2' value="picking up print"> pick-up print<br>
+            <input type="radio" name="reason" id='r3' value="tech lending"> tech lending<br>
+            <button onclick="submitcheckfunct()" class="btn" role="button" id="submitcheck">Submit</button>
+        </div>
+        </div>
+        <div class="col-md-4 checkq" align="center">
+          <button onclick="checkqueue()" class="btn" role="button" id="buttoncheckq">Check-Queue</button>
+        </div>
+    </div>
+    <div class="row calender">
+      <div class="col-md-12 checkq" align="center">
+      <div id="checkque">
+    <iframe id="spread" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSh-4NFtencp2sc4XZDRkxRZLdAZjLWRbLWYQ5ThjqXIyNGTqT6x5bHOGWvB96e6LJxl9Vdc7tw29Ya/pubhtml?widget=true&amp;headers=false"></iframe>
+    </div>
+    </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyD7WKW8wD07hQ4fTA_gUT3xHFCUVOGqR4E",
+        authDomain: "sandbox-ui.firebaseapp.com",
+        databaseURL: "https://sandbox-ui.firebaseio.com",
+        projectId: "sandbox-ui",
+        storageBucket: "sandbox-ui.appspot.com",
+        messagingSenderId: "1064917041181"
+      };
+      firebase.initializeApp(config);
+    </script>
+<script type="text/javascript">
+  var x = document.getElementById("formsignup");
+    x.style.display = "none";
+  var a = document.getElementById("buttonsignup");
+      a.style.display = "none";
+  var b = document.getElementById("buttoncheckq");
+        b.style.display = "none";
+  var y = document.getElementById("formcheck");
+    y.style.display = "none";
+  var z = document.getElementById("spread");
+      z.style.display = "none";
+  var originalState = $("formcheck").clone();
+  function signin() {
+    var x = document.getElementById("formsignup");
+    if (x.style.display == "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+  };
+function check() {
+        var y = document.getElementById("formcheck");
+        if (y.style.display == "none") {
+            y.style.display = "block";
+        } else {
+            y.style.display = "none";
+        }
+      };
+function checkqueue() {
+          var z = document.getElementById("spread");
+          if (z.style.display == "none") {
+              z.style.display = "block";
+          } else {
+              z.style.display = "none";
+          }
+        };
+function submitup() {
+    var name=document.getElementById("name").value;
+    var email=document.getElementById("email").value;
+    var println=document.getElementById("printlen").value;
+    var database = firebase.database();
+    function writeUserData(name, email) {
+  firebase.database().ref('user/' + userId).set({
+    name: name,
+    email: email,
+  });
+}
+    console.log(name);
+    console.log(email);
+    console.log(println);
+};
+
+function submitcheckfunct() {
+  var a = document.getElementById("buttonsignup");
+  var reason;
+  if (a.style.display == "none") {
+      a.style.display = "block";
+  }
+  var b = document.getElementById("buttoncheckq");
+  if (b.style.display == "none") {
+      b.style.display = "block";
+  }
+  if (document.getElementById('r1').checked) {
+  reason = document.getElementById('r1').value;
+}
+  else if (document.getElementById('r2').checked) {
+reason = document.getElementById('r2').value;
+}
+  else if (document.getElementById('r3').checked) {
+reason = document.getElementById('r3').value;
+}
+  console.log(reason);
+};
+</script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"> </script>
+
+  </body>
+  </html>
