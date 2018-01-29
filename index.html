@@ -109,8 +109,7 @@ function submitup() {
    var firebaseRef=firebase.database().ref('sandbox-ui').push();
     firebaseRef.child("Name").set(name);
     firebaseRef.child("Email").set(email);
-  }
-}
+  });
     console.log(name);
     console.log(email);
     console.log(println);
