@@ -23,7 +23,7 @@
             <input type="text" name="name" id="name"><br>
             Email:<br>
             <input type="text" name="lastname" id="email"><br>
-            Print Length:<br>
+            Print Length(in hours):<br>
             <input type="text" name="lastname" id="printlen"><br>
             <button onclick="submitup()" class="btn-default" role="button" id="submitupbutton"><a href="https://docs.google.com/spreadsheets/d/11Gy-D8wxOhNPoZno8j8JZ4BAXQZ2t2iO3Cvvu1K4N6o/edit?usp=sharing">Submit</a>
           </div>
@@ -107,6 +107,7 @@ function submitup() {
    var firebaseRef=firebase.database().ref('sandbox-ui/users').push();
     firebaseRef.child("Name").set(name);
     firebaseRef.child("Email").set(email);
+    firebaseRef.child("Print Length").set(println);
     console.log(name);
     console.log(email);
     console.log(println);
