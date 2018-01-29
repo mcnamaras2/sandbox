@@ -106,7 +106,7 @@ function submitup() {
     var println=document.getElementById("printlen").value;
     var database = firebase.database();
     function writeUserData(name, email) {
-  firebase.database().ref('sandbox' + userId).set({
+  firebase.database().ref('sandbox-ui' + userId).set({
     name: name,
     email: email,
   });
