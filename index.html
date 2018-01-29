@@ -106,7 +106,7 @@ function submitup() {
     var println=document.getElementById("printlen").value;
     var database = firebase.database();
     function writeUserData(name, email) {
-   var firebaseRef=firebase.database().ref('sandbox').push();
+   var firebaseRef=firebase.database().ref('sandbox-ui/users').push();
     firebaseRef.child("Name").set(name);
     firebaseRef.child("Email").set(email);
   }
