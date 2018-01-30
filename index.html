@@ -20,12 +20,12 @@
           <button onclick="signin()" class="btn" role="button" id="buttonsignup">Sign-Up</button>
           <div id="formsignup">
             Name:<br>
-            <input type="text" name="name" id="name"><br>
+            <input type="text" name="name" id="name" placeholder="Name" /><br>
             Email:<br>
-            <input type="text" name="lastname" id="email"><br>
+            <input type="text" name="lastname" id="email" placeholder="email@e.mail" /><br>
             Print Length(in hours):<br>
-            <input type="text" name="lastname" id="printlen"><br>
-            <button onclick="submitup()" class="btn-default" role="button" id="submitupbutton"><a href="https://docs.google.com/spreadsheets/d/11Gy-D8wxOhNPoZno8j8JZ4BAXQZ2t2iO3Cvvu1K4N6o/edit?usp=sharing">Submit</a>
+            <input type="text" name="lastname" id="printlen" placeholder="4" /><br>
+            <button onclick="submitup()" class="btn-default" role="button" id="submitupbutton">Submit</button>
           </div>
         </div>
         <div class="col-md-4 checkin" align="center">
@@ -104,9 +104,23 @@ function checkqueue() {
           }
         };
 function submitup() {
+
     var name=document.getElementById("name").value;
     var email=document.getElementById("email").value;
     var println=document.getElementById("printlen").value;
+    if(name==""&&email==""&&println==""){
+      alert("Must enter information!")
+    }
+    else if(email==""){
+      alert("Must enter an email address!")
+    }
+    else if(println==""){
+      alert("Must enter a print length!")
+    }
+    else if(name==""){
+      alert("Must enter a name!")
+    }
+    else{
     var database = firebase.database();
    var firebaseRef=firebase.database().ref('sandbox-ui/users').push();
     firebaseRef.child("Name").set(name);
@@ -116,6 +130,9 @@ function submitup() {
     console.log(email);
     console.log(println);
     console.log(reason);
+    var url=window.location.hostname;
+  window.location.assign("https://docs.google.com/spreadsheets/d/11Gy-D8wxOhNPoZno8j8JZ4BAXQZ2t2iO3Cvvu1K4N6o/edit?usp=sharing");
+  }
 };
 
 function submitcheckfunct() {
