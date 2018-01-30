@@ -112,7 +112,6 @@ function submitup() {
     firebaseRef.child("Name").set(name);
     firebaseRef.child("Email").set(email);
     firebaseRef.child("Print Length").set(println);
-    firebaseRef.child("Reason for Visit").set(reason);
     console.log(name);
     console.log(email);
     console.log(println);
@@ -137,6 +136,12 @@ reason = document.getElementById('r2').value;
   else if (document.getElementById('r3').checked) {
 reason = document.getElementById('r3').value;
 }
+else if (document.getElementById('r4').checked) {
+reason = document.getElementById('r4').value;
+}
+var database = firebase.database();
+var firebaseRef=firebase.database().ref('sandbox-ui/reason').push();
+firebaseRef.child("Reason for Visit").set(reason);
   console.log(reason);
 };
 </script>
