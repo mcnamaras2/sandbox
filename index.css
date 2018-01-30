@@ -12,14 +12,25 @@ font-family: 'Open Sans'
 }
 .btn{
   background-color: #b71c1c;
-  text-align: center;
-  padding-top: 1.75rem;
+  text-align:center;
   color:white;
   height:6rem;
   width: 12rem;
 }
 .calender{
   height:25rem;
+}
+#submitcheck{
+  height:4rem;
+  width: 8rem;
+  font-size: 10pt;
+  text-align:center;
+}
+#submitupbutton{
+  height:4rem;
+  width: 8rem;
+  font-size: 10pt;
+  text-align:center;
 }
 #formsignup{
 display: none;
