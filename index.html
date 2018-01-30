@@ -108,17 +108,22 @@ function submitup() {
     var name=document.getElementById("name").value;
     var email=document.getElementById("email").value;
     var println=document.getElementById("printlen").value;
+    var domain = email.substring(email.lastIndexOf("@") +1);
+    console.log(domain)
     if(name==""&&email==""&&println==""){
       alert("Must enter information!")
+    }
+    else if(name==""){
+      alert("Must enter a name!")
     }
     else if(email==""){
       alert("Must enter an email address!")
     }
+    else if(domain!="wit.edu"){
+      alert("Must be a wit.edu email account!")
+    }
     else if(println==""){
       alert("Must enter a print length!")
-    }
-    else if(name==""){
-      alert("Must enter a name!")
     }
     else{
     var database = firebase.database();
