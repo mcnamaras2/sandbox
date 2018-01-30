@@ -119,6 +119,7 @@ function submitup() {
 };
 
 function submitcheckfunct() {
+  if (document.getElementById('r1').checked||document.getElementById('r2').checked||document.getElementById('r3').checked||document.getElementById('r4').checked){
   var a = document.getElementById("buttonsignup");
   if (a.style.display == "none") {
       a.style.display = "block";
@@ -143,6 +144,10 @@ var database = firebase.database();
 var firebaseRef=firebase.database().ref('sandbox-ui/reason').push();
 firebaseRef.child("Reason for Visit").set(reason);
   console.log(reason);
+}
+else{
+  alert("Must pick a reason!");
+}
 };
 </script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"> </script>
