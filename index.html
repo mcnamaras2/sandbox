@@ -106,15 +106,20 @@ function checkqueue() {
 function submitup() {
 
     var name=document.getElementById("name").value;
+    var res = name.split(" ");
     var email=document.getElementById("email").value;
     var println=document.getElementById("printlen").value;
     var domain = email.substring(email.lastIndexOf("@") +1);
     console.log(domain)
+    console.log(res)
     if(name==""&&email==""&&println==""){
       alert("Must enter information!")
     }
     else if(name==""){
       alert("Must enter a name!")
+    }
+    else if(res[1]==""||res[1]==undefined){
+      alert("Must enter a last name!")
     }
     else if(email==""){
       alert("Must enter an email address!")
