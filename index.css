@@ -14,23 +14,23 @@ font-family: 'Open Sans'
   background-color: #b71c1c;
   text-align:center;
   color:white;
-  height:6rem;
-  width: 12rem;
+  height:10rem;
+  width: 15rem;
 }
 .calender{
   padding-top: 1.2rem;
   height:25rem;
 }
 #submitcheck{
-  height:4rem;
-  width: 8rem;
-  font-size: 10pt;
+  height:6rem;
+  width: 10rem;
+  font-size: 15pt;
   text-align:center;
 }
 #submitupbutton{
-  height:4rem;
-  width: 8rem;
-  font-size: 10pt;
+  height:6rem;
+  width: 10rem;
+  font-size: 15pt;
   text-align:center;
 }
 #formsignup{
