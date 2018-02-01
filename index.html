@@ -50,8 +50,14 @@
     </div>
     </div>
     </div>
+    <div class="row calender2">
+      <div class="col-md-12 checkq2" align="center">
+      <div id="editque">
+    <iframe id="editspread" src="https://docs.google.com/spreadsheets/d/11Gy-D8wxOhNPoZno8j8JZ4BAXQZ2t2iO3Cvvu1K4N6o/edit?usp=sharing?widget=true&amp;headers=false"></iframe>
+    </div>
+    </div>
+    </div>
   </div>
-
     <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
     <script>
       // Initialize Firebase
@@ -78,6 +84,8 @@ firebase.initializeApp(config);
     y.style.display = "none";
   var z = document.getElementById("spread");
       z.style.display = "none";
+  var edit = document.getElementById("editspread");
+      edit.style.display = "none"
   var originalState = $("formcheck").clone();
   function signin() {
     var x = document.getElementById("formsignup");
@@ -140,8 +148,10 @@ function submitup() {
     console.log(email);
     console.log(println);
     console.log(reason);
-    var url=window.location.hostname;
-  window.open("https://docs.google.com/spreadsheets/d/11Gy-D8wxOhNPoZno8j8JZ4BAXQZ2t2iO3Cvvu1K4N6o/edit?usp=sharing");
+    var edit = document.getElementById("editspread");
+    if (edit.style.display == "none") {
+        edit.style.display = "block";
+    }
   }
 };
 
