@@ -3,7 +3,7 @@ font-family: 'Open Sans';
 background-color:#616161;
 }
 .jumbotron{
-  background-color: #F44336;
+  background-color: #D32F2F;
   color:white;
   text-align: center;
 }
@@ -12,7 +12,7 @@ background-color:#616161;
   position: relative;
 }
 .btn{
-  background-color: #F44336;
+  background-color: #D32F2F;
   text-align:center;
   color:white;
   height:10rem;
