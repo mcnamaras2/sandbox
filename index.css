@@ -1,8 +1,9 @@
 body{
-font-family: 'Open Sans'
+font-family: 'Open Sans';
+background-color:#616161;
 }
 .jumbotron{
-  background-color: #b71c1c;
+  background-color: #F44336;
   color:white;
   text-align: center;
 }
@@ -11,7 +12,7 @@ font-family: 'Open Sans'
   position: relative;
 }
 .btn{
-  background-color: #b71c1c;
+  background-color: #F44336;
   text-align:center;
   color:white;
   height:10rem;
@@ -38,13 +39,22 @@ display: none;
 }
 #formcheck{
 display: none;
+font-size: 15pt;
 }
 #spread{
+  min-height: 75rem;
+  min-width: 75rem;
+  max-width: 75rem;
+  max-height: 75rem;
   height:75rem;
   width:75rem;
   display: none;
 }
 #editspread{
+  min-height: 75rem;
+  min-width: 75rem;
+  max-width: 75rem;
+  max-height: 75rem;
   height:75rem;
   width:75rem;
   display: none;

@@ -15,11 +15,11 @@
     <h1>Technology Sandbox</h1>
       </div>
     </div>
-    <div class="container">
+    <div class="container-fluid">
       <div class="row buttonrow">
         <div class="col-md-4 signup" align="center">
           <button onclick="signin()" class="btn" role="button" id="buttonsignup">Sign-Up</button>
-          <div id="formsignup">
+        <!--  <div id="formsignup">
             Name:<br>
             <input type="text" name="name" id="name" placeholder="Name" /><br>
             Email:<br>
@@ -27,9 +27,9 @@
             Print Length(in hours):<br>
             <input type="number" name="printlength" id="printlen" placeholder="4" /><br>
             <button onclick="submitup()" class="btn" role="button" id="submitupbutton">Submit</button>
-          </div>
+          </div> -->
         </div>
-        <div class="col-md-4 checkin" align="center">
+        <div class="col-lg-4 checkin" align="center">
           <button onclick="check()" class="btn" role="button" id="buttoncheckin">Check-In</button>
           <div id="formcheck">
             Reason for visit:<br>
@@ -40,25 +40,22 @@
             <button onclick="submitcheckfunct()" class="btn" role="button" id="submitcheck">Submit</button>
         </div>
         </div>
-        <div class="col-md-4 checkq" align="center">
+        <div class="col-lg-4 checkq" align="center">
           <button onclick="checkqueue()" class="btn" role="button" id="buttoncheckq">Check-Queue</button>
         </div>
     </div>
     <div class="row calender">
-      <div class="col-md-12 checkq" align="center">
+      <div class="col-lg-6 checkq2" align="center">
+      <div id="editque">
+    <iframe id="editspread"  src="https://docs.google.com/spreadsheets/d/11Gy-D8wxOhNPoZno8j8JZ4BAXQZ2t2iO3Cvvu1K4N6o/edit?usp=sharing?widget=true&amp;headers=false"></iframe>
+    </div>
+    </div>
+      <div class="col-lg-6 checkq" align="center">
       <div id="checkque">
     <iframe id="spread" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSh-4NFtencp2sc4XZDRkxRZLdAZjLWRbLWYQ5ThjqXIyNGTqT6x5bHOGWvB96e6LJxl9Vdc7tw29Ya/pubhtml?widget=true&amp;headers=false"></iframe>
     </div>
     </div>
     </div>
-    <div class="row calender2">
-      <div class="col-md-12 checkq2" align="center">
-      <div id="editque">
-    <iframe id="editspread" src="https://docs.google.com/spreadsheets/d/11Gy-D8wxOhNPoZno8j8JZ4BAXQZ2t2iO3Cvvu1K4N6o/edit?usp=sharing?widget=true&amp;headers=false"></iframe>
-    </div>
-    </div>
-    </div>
-  </div>
     <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
     <script>
       // Initialize Firebase
@@ -75,14 +72,14 @@ firebase.initializeApp(config);
 <script type="text/javascript">
   var reason;
   var cin=document.getElementById("checkin");
-  var x = document.getElementById("formsignup");
-    x.style.display = "none";
-  var a = document.getElementById("buttonsignup");
-      a.style.display = "none";
-  var b = document.getElementById("buttoncheckq");
-        b.style.display = "none";
-  var y = document.getElementById("formcheck");
-    y.style.display = "none";
+// var x = document.getElementById("formsignup");
+//    x.style.display = "none";
+//  var a = document.getElementById("buttonsignup");
+//      a.style.display = "none";
+//  var b = document.getElementById("buttoncheckq");
+//        b.style.display = "none";
+//  var y = document.getElementById("formcheck");
+//    y.style.display = "none";
   var z = document.getElementById("spread");
       z.style.display = "none";
   var edit = document.getElementById("editspread");
@@ -112,60 +109,63 @@ function checkqueue() {
               z.style.display = "none";
           }
         };
-function submitup() {
+function signin() {
 
-    var name=document.getElementById("name").value;
-    var res = name.split(" ");
-    var email=document.getElementById("email").value;
-    var println=document.getElementById("printlen").value;
-    var domain = email.substring(email.lastIndexOf("@") +1);
-    console.log(domain)
-    console.log(res)
-    if(name==""&&email==""&&println==""){
-      alert("Must enter information!")
-    }
-    else if(name==""){
-      alert("Must enter a name!")
-    }
-    else if(res[1]==""||res[1]==undefined){
-      alert("Must enter a last name!")
-    }
-    else if(email==""){
-      alert("Must enter an email address!")
-    }
-    else if(domain!="wit.edu"){
-      alert("Must be a wit.edu email account!")
-    }
-    else if(println==""){
-      alert("Must enter a print length!")
-    }
-    else{
-    var database = firebase.database();
-   var firebaseRef=firebase.database().ref('sandbox-ui/users').push();
-    firebaseRef.child("Name").set(name);
-    firebaseRef.child("Email").set(email);
-    firebaseRef.child("Print Length").set(println);
-    console.log(name);
-    console.log(email);
-    console.log(println);
-    console.log(reason);
+  //  var name=document.getElementById("name").value;
+  //  var res = name.split(" ");
+  //  var email=document.getElementById("email").value;
+  //  var println=document.getElementById("printlen").value;
+  //  var domain = email.substring(email.lastIndexOf("@") +1);
+  //  console.log(domain)
+  //  console.log(res)
+  //  if(name==""&&email==""&&println==""){
+    //  alert("Must enter information!")
+  //  }
+  //  else if(name==""){
+  //    alert("Must enter a name!")
+  //  }
+  //  else if(res[1]==""||res[1]==undefined){
+  //    alert("Must enter a last name!")
+  //  }
+  //  else if(email==""){
+  //    alert("Must enter an email address!")
+  //  }
+  //  else if(domain!="wit.edu"){
+  //    alert("Must be a wit.edu email account!")
+  //  }
+  //  else if(println==""){
+  //    alert("Must enter a print length!")
+  //  }
+  //  else{
+  //  var database = firebase.database();
+  // var firebaseRef=firebase.database().ref('sandbox-ui/users').push();
+  //  firebaseRef.child("Name").set(name);
+  //  firebaseRef.child("Email").set(email);
+  //  firebaseRef.child("Print Length").set(println);
+  //  console.log(name);
+  //  console.log(email);
+  //  console.log(println);
+  //  console.log(reason);
     var edit = document.getElementById("editspread");
     if (edit.style.display == "none") {
         edit.style.display = "block";
     }
-  }
+    else {
+        edit.style.display = "none";
+    }
+  //}
 };
 
 function submitcheckfunct() {
   if (document.getElementById('r1').checked||document.getElementById('r2').checked||document.getElementById('r3').checked||document.getElementById('r4').checked){
-  var a = document.getElementById("buttonsignup");
-  if (a.style.display == "none") {
-      a.style.display = "block";
-  }
-  var b = document.getElementById("buttoncheckq");
-  if (b.style.display == "none") {
-      b.style.display = "block";
-  }
+//  var a = document.getElementById("buttonsignup");
+//  if (a.style.display == "none") {
+//      a.style.display = "block";
+//  }
+//  var b = document.getElementById("buttoncheckq");
+//  if (b.style.display == "none") {
+//      b.style.display = "block";
+//  }
   if (document.getElementById('r1').checked) {
   reason = document.getElementById('r1').value;
 }
@@ -187,6 +187,7 @@ else{
   alert("Must pick a reason!");
 }
 };
+
 </script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"> </script>
 
