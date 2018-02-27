@@ -95,6 +95,7 @@ var config = {
     -----------------------------------------------------------------*/
 	var database = firebase.database().ref('sandbox-ui/events');//setting database to be the reference to our events node
     $('#calendar').fullCalendar({
+      schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
       //now: $('#calendar').fullCalendar('getDate'),
 	  height:"auto",//set height of rendered calender, auto is set to allow for Fullcalender to determine best fit size
 	  //contentHeight:"auto",
