@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8' />
+<link href='../fullcalendar.min.css' rel='stylesheet' />
+<link href='../fullcalendar.print.min.css' rel='stylesheet' media='print' />
+<script src='../lib/moment.min.js'></script>
+<script src='../lib/jquery.min.js'></script>
+<script src='../fullcalendar.min.js'></script>
+<script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
+<script>
+var data;
+var i=0;
+var config = {
+        apiKey: "AIzaSyD7WKW8wD07hQ4fTA_gUT3xHFCUVOGqR4E",
+        authDomain: "sandbox-ui.firebaseapp.com",
+        databaseURL: "https://sandbox-ui.firebaseio.com",
+        projectId: "sandbox-ui",
+        storageBucket: "sandbox-ui.appspot.com",
+        messagingSenderId: "1064917041181"
+      };
+		firebase.initializeApp(config);
+		  firebase.database().ref('sandbox-ui/events').on("value", function(snapshot) {
+         //  console.log(snapshot.val());
+           var eventdata= snapshot.val();
+		   console.log(eventdata);
+           var keys = Object.keys(eventdata);
+           //console.log(keys);
+           while( i<keys.length){
+            var k = keys[i];
+			console.log(k);
+            Name =eventdata[k].title;
+			console.log('title:',Name);
+            evstart = eventdata[k].start;
+			console.log('start:',evstart);
+            evend = eventdata[k].end;
+			console.log('end:',evend);
+			allDay = eventdata[k].allDay;
+			console.log('allDay:',allDay);
+			printer = eventdata[k].resourceId;
+			console.log('resourceId:',printer);
+			id = eventdata[k].id;
+			console.log('id:',id);
+			i++;
+			}
+			});
+		 function gotData(data) {
+    console.log(data);
+	 data=data;
+  }
+	
+  $(document).ready(function() {
+
+    $('#calendar').fullCalendar({
+      defaultDate: '2018-01-12',
+      editable: true,
+      eventLimit: true, // allow "more" link when too many events
+      events: data
+    });
+
+  });
+
+</script>
+<style>
+
+  body {
+    margin: 40px 10px;
+    padding: 0;
+    font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+    font-size: 14px;
+  }
+
+  #calendar {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+</style>
+</head>
+<body>
+
+  <div id='calendar'></div>
+  <script src="https://sandbox-ui.firebaseio.com/sandbox-ui/events.json?callback=gotData"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"> </script>
+</body>
+</html>

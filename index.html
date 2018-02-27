@@ -17,8 +17,8 @@
     </div>
     <div class="container-fluid">
       <div class="row buttonrow">
-        <div class="col-lg-4 signup" align="center">
-          <button onclick="signin()" class="btn" role="button" id="buttonsignup">Sign-Up</button>
+        <div class="col-lg-12 signup" align="center">
+          <a href="calender.html"> <button class="btn" role="button" id="buttonsignup">Sign-Up</button></a>
         <!--  <div id="formsignup">
             Name:<br>
             <input type="text" name="name" id="name" placeholder="Name" /><br>
@@ -29,7 +29,7 @@
             <button onclick="submitup()" class="btn" role="button" id="submitupbutton">Submit</button>
           </div> -->
         </div>
-        <div class="col-lg-4 checkin" align="center">
+        <!-- <div class="col-lg-4 checkin" align="center">
           <button onclick="check()" class="btn" role="button" id="buttoncheckin">Check-In</button>
           <div id="formcheck">
             Reason for visit:<br>
@@ -55,7 +55,7 @@
     <iframe id="spread" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSh-4NFtencp2sc4XZDRkxRZLdAZjLWRbLWYQ5ThjqXIyNGTqT6x5bHOGWvB96e6LJxl9Vdc7tw29Ya/pubhtml?widget=true&amp;headers=false"></iframe>
     </div>
     </div>
-    </div>
+    </div> -->
     <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
     <script>
       // Initialize Firebase
@@ -146,13 +146,13 @@ function signin() {
   //  console.log(email);
   //  console.log(println);
   //  console.log(reason);
-    var edit = document.getElementById("editspread");
-    if (edit.style.display == "none") {
-        edit.style.display = "block";
-    }
-    else {
-        edit.style.display = "none";
-    }
+  //  var edit = document.getElementById("editspread");
+  //  if (edit.style.display == "none") {
+  //      edit.style.display = "block";
+  //  }
+  //  else {
+  //      edit.style.display = "none";
+  //  }
   //}
 };
 
