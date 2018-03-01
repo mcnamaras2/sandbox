@@ -245,8 +245,8 @@ $('#calendar').fullCalendar('updateEvent',event);
   }
     else if(confirm('Do you wish to Delete this print?')) {
       var h=keys[event.id];
-      alert(event.id);
-     alert(h);
+    //  alert(event.id);
+    //  alert(h);
        //event.title = Deleted;
        //ar idforchange= snapshot.val();
        //rootRef.child(rowId).remove()
@@ -257,8 +257,10 @@ $('#calendar').fullCalendar('updateEvent',event);
        firebaseRef.update({title:event.title});
        firebaseRef.update({start:0});
        firebaseRef.update({end:0});
-        firebaseRef.update({resourceId:'z'});
-       $('#calendar').fullCalendar('updateEvent',event);
+       firebaseRef.update({resourceId:'z'});
+      $('#calendar').fullCalendar( 'renderEvent', event );
+      location.reload();
+      // $('#calendar').fullCalendar('updateEvent',event);
     }
     else{
 
@@ -267,7 +269,6 @@ $('#calendar').fullCalendar('updateEvent',event);
 }
 });
 	$('#calender').fullCalendar( 'refetchEvents' );
-	//$('#calendar').fullCalendar( 'renderEvents',arr),
 	$('#calendar').fullCalendar('render');
 });
 </script>
