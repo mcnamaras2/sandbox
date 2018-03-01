@@ -144,12 +144,6 @@ var config = {
       resourceLabelText: '3D Printers',
 	  resourceAreaHeight: '100%',
 	  eventOverlap: false,
-	  //eventSources:[
-	  //{
-	  //url:'https://sandbox-ui.firebaseio.com/sandbox-ui/events.json' ,
-	  //dataType: 'jsonp'
-	  //}
-	  //],
 	  events: arr,
       resources: [
         { id: 'a', title: 'MakerBot 1' },
@@ -177,16 +171,20 @@ var config = {
       },
       eventResize: function(event) {
         var h=keys[event.id];
+          if (event.title==="Print: Name"){
+            alert(event.title + " end is now " + event.end.format('YYYY-MM-DD HH:MM'));
+            alert(event.title + " start is now " + event.start.format('YYYY-MM-DD HH:MM'));
+          }
         //set h to be the value of key, which currently is the last key in the eventdata snapshot from firebase
-   alert(event.title + " end is now " + event.end.format('YYYY-MM-DD HH:MM'));
-   alert(event.title + " start is now " + event.start.format('YYYY-MM-DD HH:MM'));
-    var firebaseRef=firebase.database().ref('sandbox-ui/events/'+h);
+
+   else{
+    var firebaseRef=firebase.database().ref('sandbox-ui/events/'+h).push();
 
     firebaseRef.update({start:event.start.format('YYYY-MM-DD HH:MM')});
     firebaseRef.update({end:event.end.format('YYYY-MM-DD HH:MM')});
     firebaseRef.update({resourceId:event.resourceId});
 		var resourceId=event.resourceId;
-
+}
  },
 	  eventClick: function(event, jsEvent, view) {
       //var things=event.id-1;
@@ -306,8 +304,12 @@ $('#calendar').fullCalendar('updateEvent',event);
   .fc-widget-content{
      height: 5rem !important;
 }
-.fc-timeline-event fc-h-event fc-event fc-start fc-end fc-draggable fc-resizable{
-height:4rem !important;
+.fc-timeline-event .fc-h-event .fc-event .fc-start .fc-end .fc-draggable .fc-resizable{
+height:3rem !important;
+}
+.fc-event {
+  margin-top: .5rem;
+  height: 3em !important;
 }
 </style>
 </head>
