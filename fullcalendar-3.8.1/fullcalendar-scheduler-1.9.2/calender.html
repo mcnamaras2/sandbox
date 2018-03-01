@@ -185,9 +185,9 @@ var config = {
           }
         //set h to be the value of key, which currently is the last key in the eventdata snapshot from firebase
    else {
-     alert(event.id);
+     //alert(event.id);
      var h=keys[event.id];
-    alert(h);
+    //alert(h);
     database = firebase.database();
     var firebaseRef=firebase.database().ref('sandbox-ui/events/'+h);
     alert("Length of Print:"+ duration.hours()+' hours:'+duration.minutes()+' minutes');
