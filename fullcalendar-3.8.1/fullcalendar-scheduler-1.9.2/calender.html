@@ -163,39 +163,42 @@ var config = {
       },
       eventDrop: function(event) { // called when an event (already on the calendar) is moved
         console.log('eventDrop', event);
+        if(event.resourceId==undefined){
+
+        }
+        else{
+
+
         var h=keys[event.id];
         //set h to be the value of key, which currently is the last key in the eventdata snapshot from firebase
-    var firebaseRef=firebase.database().ref('sandbox-ui/events/'+h).push;
+    var firebaseRef=firebase.database().ref('sandbox-ui/events/'+h);
     firebaseRef.update({resourceId:event.resourceId});
-    var resourceId=event.resourceId;
+  }
+
       },
-      eventResize: function(event) {
+  eventResize: function(event) {
         var duration = moment.duration(event.end - event.start);
-        var h=keys[event.id];
-          if (event.title==="Print: Name"){
+          if (event.title=="Print: Name"){
+            //alert(h);
             //var dur=event.start.format('YYYY-MM-DD HH:MM')-event.end.format('YYYY-MM-DD HH:MM');
-            alert("Length of Print"+ duration.hours().minutes());
+          alert("Length of Print:"+ duration.hours()+' hours:'+duration.minutes()+' minutes');
           }
         //set h to be the value of key, which currently is the last key in the eventdata snapshot from firebase
-
-   else{
-    var firebaseRef=firebase.database().ref('sandbox-ui/events/'+h).push();
-
-      alert("Length of Print:"+ duration.hours()+' hours:'+duration.minutes()+' minutes');
+   else {
+     alert(event.id);
+     var h=keys[event.id];
+    alert(h);
+    database = firebase.database();
+    var firebaseRef=firebase.database().ref('sandbox-ui/events/'+h);
+    alert("Length of Print:"+ duration.hours()+' hours:'+duration.minutes()+' minutes');
     firebaseRef.update({start:event.start.format('YYYY-MM-DD HH:MM')});
     firebaseRef.update({end:event.end.format('YYYY-MM-DD HH:MM')});
-    firebaseRef.update({resourceId:event.resourceId});
-
-		var resourceId=event.resourceId;
+    $('#calendar').fullCalendar('updateEvent',event);
 }
  },
 	  eventClick: function(event, jsEvent, view) {
       //var things=event.id-1;
-              var h=keys[event.id];
-              //set h to be the value of key, which currently is the last key in the eventdata snapshot from firebase
-             //alert(h);
-          var title = prompt('Event Title:', event.title, { buttons: { Ok: true, Cancel: false} });
-		 start=moment(event.start).format('YYYY-MM-DD HH:MM');
+		  start=moment(event.start).format('YYYY-MM-DD HH:MM');
 		  if (event.end==null){
 		  event.end = event.start;
 		  event.end = event.end.add(moment.duration("1:00:00"));
@@ -207,8 +210,8 @@ var config = {
 		  }
 		  //var length=event.end.diff(event.start, 'minutes');
 		  //var length=(end-start);
-          if (title){
-            if (event.title==="Print: Name"){
+  if (event.title=="Print: Name"){
+    var title = prompt('Event Title:', event.title, { buttons: { Ok: true, Cancel: false} });
               event.title = title;
 		database = firebase.database();
 		var firebaseRef=firebase.database().ref('sandbox-ui/events').push();
@@ -225,25 +228,31 @@ var config = {
 		//$('#calender').fullCalendar( 'refetchEvents' );
 		//$('#calender').fullCalendar( 'rerenderEvents' );
   }
-    else{
-
-  //var idforchange= snapshot.val();
-  //rootRef.child(rowId).remove()
-event.title = title;
+    if (confirm('Do you wish to rename this print?')) {
+      var title = prompt('Event Title:', event.title, { buttons: { Ok: true, Cancel: false} });
+      var h=keys[event.id];
+      alert(event.id);
+     alert(h);
+       event.title = title;
+  //ar idforchange= snapshot.val();
+//rootRef.child(rowId).remove()
+//event.title = title;
+alert(event.title);
 database = firebase.database();
-var firebaseRef=firebase.database().ref('sandbox-ui/events/'+h);
-
+firebaseRef=firebase.database().ref('sandbox-ui/events/'+h);
 firebaseRef.update({title:event.title});
 $('#calendar').fullCalendar('updateEvent',event);
-    }
-		}
-	}
-    });
+  }
+  else{
+
+  }
+
+}
+});
 	$('#calender').fullCalendar( 'refetchEvents' );
 	//$('#calendar').fullCalendar( 'renderEvents',arr),
 	$('#calendar').fullCalendar('render');
-	});
-
+});
 </script>
 <style>
   body {
