@@ -25,7 +25,13 @@ var obj;
 var count=0;
 var eventdata ;
 var data;
+var datas;
+var key;
+var keys;
 var arr;
+var k;
+var start;
+var end;
 //url: 'https://sandbox-ui.firebaseio.com/sandbox-ui/events.json';
 //config info for the firebase database
 var config = {
@@ -40,12 +46,19 @@ var config = {
 		firebase.initializeApp(config);
 		  firebase.database().ref('sandbox-ui/events').on("value", function(snapshot) {
          //  console.log(snapshot.val());
-           var eventdata= snapshot.val();//setting eventdata to be the data retrieved by snapshot.val
+          eventdata= snapshot.val();//setting eventdata to be the data retrieved by snapshot.val
 		   console.log(eventdata);
-           var keys = Object.keys(eventdata);
+           keys = Object.keys(eventdata);
            //console.log(keys);
+          snapshot.forEach(function (childSnapshot) {
+             key = childSnapshot.key;
+             datas = childSnapshot.val();
+            console.log(key, datas);
+          })
+            //console.log('Getting Feed From', key, data.username, index);
+            //getFeed(key);
            while( i<keys.length){//loop that pulls out individual information from each entry for troubleshooting purposes
-            var k = keys[i];
+            k = keys[i];
 			console.log(k);
             Name =eventdata[k].title;
 			console.log('title:',Name);
@@ -60,6 +73,7 @@ var config = {
 			id = eventdata[k].id;
 			console.log('id:',id);
 			i++;
+      count=i;
 			}
 			});
 		 function gotData(data) {
@@ -152,11 +166,32 @@ var config = {
       },
       eventDrop: function(event) { // called when an event (already on the calendar) is moved
         console.log('eventDrop', event);
+        var h=keys[event.id];
+        //set h to be the value of key, which currently is the last key in the eventdata snapshot from firebase
+    var firebaseRef=firebase.database().ref('sandbox-ui/events/'+h);
+    firebaseRef.update({resourceId:event.resourceId});
+    var resourceId=event.resourceId;
       },
-	  eventClick: function(event, jsEvent, view) {
+      eventResize: function(event) {
+        var h=keys[event.id];
+        //set h to be the value of key, which currently is the last key in the eventdata snapshot from firebase
+   alert(event.title + " end is now " + event.end.format('YYYY-MM-DD HH:MM'));
+   alert(event.title + " start is now " + event.start.format('YYYY-MM-DD HH:MM'));
+    var firebaseRef=firebase.database().ref('sandbox-ui/events/'+h);
 
+    firebaseRef.update({start:event.start.format('YYYY-MM-DD HH:MM')});
+    firebaseRef.update({end:event.end.format('YYYY-MM-DD HH:MM')});
+    firebaseRef.update({resourceId:event.resourceId});
+		var resourceId=event.resourceId;
+
+ },
+	  eventClick: function(event, jsEvent, view) {
+      //var things=event.id-1;
+              var h=keys[event.id];
+              //set h to be the value of key, which currently is the last key in the eventdata snapshot from firebase
+             alert(h);
           var title = prompt('Event Title:', event.title, { buttons: { Ok: true, Cancel: false} });
-		  var start=moment(event.start).format('YYYY-MM-DD HH:MM');
+		 start=moment(event.start).format('YYYY-MM-DD HH:MM');
 		  if (event.end==null){
 		  event.end = event.start;
 		  event.end = event.end.add(moment.duration("1:00:00"));
@@ -169,6 +204,7 @@ var config = {
 		  //var length=event.end.diff(event.start, 'minutes');
 		  //var length=(end-start);
           if (title){
+            if (event.title==="Print: Name"){
               event.title = title;
 		database = firebase.database();
 		var firebaseRef=firebase.database().ref('sandbox-ui/events').push();
@@ -179,10 +215,23 @@ var config = {
 		firebaseRef.child("title").set(event.title);
 	    firebaseRef.child("allDay").set(false);
 		$('#calendar').fullCalendar('updateEvent',event);
-		//firebaseRef.child("id").set(count+1);
+		firebaseRef.child("id").set(count-1);
+    console.log(count);
 		//firebaseRef.child("length").set(length);
 		//$('#calender').fullCalendar( 'refetchEvents' );
 		//$('#calender').fullCalendar( 'rerenderEvents' );
+  }
+    else{
+
+  //var idforchange= snapshot.val();
+  //rootRef.child(rowId).remove()
+event.title = title;
+database = firebase.database();
+var firebaseRef=firebase.database().ref('sandbox-ui/events/'+h);
+
+firebaseRef.update({title:event.title});
+$('#calendar').fullCalendar('updateEvent',event);
+    }
 		}
 	}
     });
@@ -195,27 +244,27 @@ var config = {
 <style>
 
   body {
-    margin-top: 40px;
+    margin-top: 2.5rem;
     text-align: center;
-    font-size: 14px;
+    font-size: 0.875rem;
     font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
   }
 
   #wrap {
-    width: 1100px;
+    width: 68.75rem;
     margin: 0 auto;
   }
 
   #external-events {
     float: left;
-    width: 150px;
-    border: 1px solid #ccc;
+    width: 9.375rem;
+    border: 0.0625rem solid #ccc;
     background: #eee;
     text-align: left;
   }
 
   #external-events h4 {
-    font-size: 16px;
+    font-size: 1;
     margin-top: 0;
     padding-top: 1em;
   }
@@ -227,7 +276,7 @@ var config = {
 
   #external-events p {
     margin: 1.5em 0;
-    font-size: 11px;
+    font-size:  0.6875rem;
     color: #666;
   }
 
@@ -238,14 +287,14 @@ var config = {
 
   #calendar {
     float: right;
-    width: 900px;
+    width: 56.2rem;
   }
 
   .fc-widget-content{
-     height: 50px !important;
+     height: 3.125rem !important;
 }
 .fc-timeline-event fc-h-event fc-event fc-start fc-end fc-draggable fc-resizable{
-height:45px !important;
+height:3rem !important;
 }
 </style>
 </head>
