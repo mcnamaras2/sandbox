@@ -170,19 +170,22 @@ var config = {
     var resourceId=event.resourceId;
       },
       eventResize: function(event) {
+        var duration = moment.duration(event.end - event.start);
         var h=keys[event.id];
           if (event.title==="Print: Name"){
-            alert(event.title + " end is now " + event.end.format('YYYY-MM-DD HH:MM'));
-            alert(event.title + " start is now " + event.start.format('YYYY-MM-DD HH:MM'));
+            //var dur=event.start.format('YYYY-MM-DD HH:MM')-event.end.format('YYYY-MM-DD HH:MM');
+            alert("Length of Print"+ duration.hours().minutes());
           }
         //set h to be the value of key, which currently is the last key in the eventdata snapshot from firebase
 
    else{
     var firebaseRef=firebase.database().ref('sandbox-ui/events/'+h).push();
 
+      alert("Length of Print:"+ duration.hours()+' hours:'+duration.minutes()+' minutes');
     firebaseRef.update({start:event.start.format('YYYY-MM-DD HH:MM')});
     firebaseRef.update({end:event.end.format('YYYY-MM-DD HH:MM')});
     firebaseRef.update({resourceId:event.resourceId});
+
 		var resourceId=event.resourceId;
 }
  },
@@ -308,8 +311,8 @@ $('#calendar').fullCalendar('updateEvent',event);
 height:3rem !important;
 }
 .fc-event {
-  margin-top: .5rem;
-  height: 3em !important;
+  margin-top: 1.5rem;
+  height: 4em !important;
 }
 </style>
 </head>
