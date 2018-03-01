@@ -165,7 +165,7 @@ var config = {
         console.log('eventDrop', event);
         var h=keys[event.id];
         //set h to be the value of key, which currently is the last key in the eventdata snapshot from firebase
-    var firebaseRef=firebase.database().ref('sandbox-ui/events/'+h);
+    var firebaseRef=firebase.database().ref('sandbox-ui/events/'+h).push;
     firebaseRef.update({resourceId:event.resourceId});
     var resourceId=event.resourceId;
       },
