@@ -228,11 +228,11 @@ var config = {
 		//$('#calender').fullCalendar( 'refetchEvents' );
 		//$('#calender').fullCalendar( 'rerenderEvents' );
   }
-    else if(confirm('Do you wish to rename this print?')) {
+  else if(confirm('Do you wish to rename this print?')) {
       var title = prompt('Event Title:', event.title, { buttons: { Ok: true, Cancel: false} });
       var h=keys[event.id];
-      alert(event.id);
-     alert(h);
+      //alert(event.id);
+     //alert(h);
        event.title = title;
   //ar idforchange= snapshot.val();
 //rootRef.child(rowId).remove()
@@ -243,6 +243,26 @@ firebaseRef=firebase.database().ref('sandbox-ui/events/'+h);
 firebaseRef.update({title:event.title});
 $('#calendar').fullCalendar('updateEvent',event);
   }
+    else if(confirm('Do you wish to Delete this print?')) {
+      var h=keys[event.id];
+      alert(event.id);
+     alert(h);
+       //event.title = Deleted;
+       //ar idforchange= snapshot.val();
+       //rootRef.child(rowId).remove()
+       //event.title = title;
+       //alert(event.title);
+       database = firebase.database();
+       firebaseRef=firebase.database().ref('sandbox-ui/events/'+h);
+       firebaseRef.update({title:event.title});
+       firebaseRef.update({start:0});
+       firebaseRef.update({end:0});
+        firebaseRef.update({resourceId:'z'});
+       $('#calendar').fullCalendar('updateEvent',event);
+    }
+    else{
+
+    }
 
 }
 });
