@@ -228,7 +228,7 @@ var config = {
 		//$('#calender').fullCalendar( 'refetchEvents' );
 		//$('#calender').fullCalendar( 'rerenderEvents' );
   }
-    if (confirm('Do you wish to rename this print?')) {
+    else if(confirm('Do you wish to rename this print?')) {
       var title = prompt('Event Title:', event.title, { buttons: { Ok: true, Cancel: false} });
       var h=keys[event.id];
       alert(event.id);
@@ -242,9 +242,6 @@ database = firebase.database();
 firebaseRef=firebase.database().ref('sandbox-ui/events/'+h);
 firebaseRef.update({title:event.title});
 $('#calendar').fullCalendar('updateEvent',event);
-  }
-  else{
-
   }
 
 }
