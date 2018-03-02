@@ -163,21 +163,18 @@ var config = {
       },
       eventDrop: function(event) { // called when an event (already on the calendar) is moved
         console.log('eventDrop', event);
-        if(event.resourceId==undefined){
-
-        }
-        else{
-
 
         var h=keys[event.id];
         //set h to be the value of key, which currently is the last key in the eventdata snapshot from firebase
+        database = firebase.database();
     var firebaseRef=firebase.database().ref('sandbox-ui/events/'+h);
-    firebaseRef.update({resourceId:event.resourceId});
+      firebaseRef.update({resourceId:event.resourceId});
+      firebaseRef.update({start:event.start.format('YYYY-MM-DD HH:MM')});
+      firebaseRef.update({end:event.end.format('YYYY-MM-DD HH:MM')});
     $("#calendar").fullCalendar('removeEvents');
+    gotData(eventdata);
     $("#calendar").fullCalendar('addEventSource', arr);
     $('#calendar').fullCalendar( 'rerenderEvents');
-
-  }
 },
   eventResize: function(event) {
         var duration = moment.duration(event.end - event.start);
