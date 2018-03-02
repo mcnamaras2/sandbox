@@ -119,7 +119,11 @@ var config = {
       editable: true, // enable draggable events
       droppable: true, // this allows things to be dropped onto the calendar
       //aspectRatio: 3, unneeded due to height value being set
-      scrollTime: '09:00',// undo default 6am scrollTime
+      scrollTime: '09:00',
+      nowIndicator: true,// undo default 6am scrollTime
+      slotDuration: '00:30:00',
+
+
 	  // days of week. an array of zero-based day of week integers (0=Sunday), broken into two arrays to allow for different hours for weekend days
 	  businessHours:[ {
     dow: [ 1, 2, 3, 4, 5 ], // Monday - Friday
@@ -416,7 +420,7 @@ height:3rem !important;
   <div id='wrap'>
     <div id='external-events'>
       <h4>Drag me onto calender!</h4>
-      <div class='fc-event'>Print: Name</div>
+      <div class='fc-event' data-duration="01:00">Print: Name</div>
       <div>
       <button type="button" onclick="goto()" > Go to Date</button></a>
       </div>
