@@ -50,31 +50,31 @@ var config = {
 		  firebase.database().ref('sandbox-ui/events').on("value", function(snapshot) {
          //  console.log(snapshot.val());
           eventdata= snapshot.val();//setting eventdata to be the data retrieved by snapshot.val
-		   console.log(eventdata);
+		  // console.log(eventdata);
            keys = Object.keys(eventdata);
            //console.log(keys);
           snapshot.forEach(function (childSnapshot) {
              key = childSnapshot.key;
              datas = childSnapshot.val();
-            console.log(key, datas);
+        //    console.log(key, datas);
           })
             //console.log('Getting Feed From', key, data.username, index);
             //getFeed(key);
            while( i<keys.length){//loop that pulls out individual information from each entry for troubleshooting purposes
             k = keys[i];
-			console.log(k);
+			//console.log(k);
             Name =eventdata[k].title;
-			console.log('title:',Name);
+			//console.log('title:',Name);
             evstart = eventdata[k].start;
-			console.log('start:',evstart);
+		//	console.log('start:',evstart);
             evend = eventdata[k].end;
-			console.log('end:',evend);
+		//	console.log('end:',evend);
 			allDay = eventdata[k].allDay;
-			console.log('allDay:',allDay);
+		//	console.log('allDay:',allDay);
 			printer = eventdata[k].resourceId;
-			console.log('resourceId:',printer);
+		//	console.log('resourceId:',printer);
 			id = eventdata[k].id;
-			console.log('id:',id);
+		//	console.log('id:',id);
 			i++;
       count=i;
 			}
@@ -198,21 +198,21 @@ var config = {
  },
 	  eventClick: function(event, jsEvent, view) {
       //var things=event.id-1;
-		  start=moment(event.start).format('YYYY-MM-DD HH:MM');
-		  if (event.end==null){
-		  event.end = event.start;
-		  event.end = event.end.add(moment.duration("1:00:00"));
-		  var allday='FALSE';
-		   var end= moment(event.end).format('YYYY-MM-DD HH:MM');
-		  }
-		  else{
-		  var end= moment(event.end).format('YYYY-MM-DD HH:MM');
-		  }
 		  //var length=event.end.diff(event.start, 'minutes');
 		  //var length=(end-start);
   if (event.title=="Print: Name"){
     var title = prompt('Event Title:', event.title, { buttons: { Ok: true, Cancel: false} });
               event.title = title;
+              start=moment(event.start).format('YYYY-MM-DD HH:MM');
+        		  if (event.end==null){
+        		  event.end = event.start;
+        		  event.end = event.end.add(moment.duration("1:00:00"));
+        		  var allday='FALSE';
+        		   var end= moment(event.end).format('YYYY-MM-DD HH:MM');
+        		  }
+        		  else{
+        		  var end= moment(event.end).format('YYYY-MM-DD HH:MM');
+        		  }
 		database = firebase.database();
 		var firebaseRef=firebase.database().ref('sandbox-ui/events').push();
 		firebaseRef.child("resourceId").set(event.resourceId);
@@ -266,7 +266,7 @@ $('#calendar').fullCalendar('updateEvent',event);
 
     }
 
-}
+},
 });
 	$('#calender').fullCalendar( 'refetchEvents' );
 	$('#calendar').fullCalendar('render');
@@ -296,7 +296,7 @@ $('#calendar').fullCalendar('updateEvent',event);
   #external-events {
     float: left;
     width: 9.375rem;
-      height:7rem;
+    height:10rem;
     border: 0.0625rem solid #ccc;
     background: #eee;
     text-align: left;
