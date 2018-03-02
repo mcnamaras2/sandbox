@@ -220,7 +220,13 @@ var config = {
 		  //var length=(end-start);
   if (event.title=="Print: Name"){
     var title = prompt('Event Title:', event.title, { buttons: { Ok: true, Cancel: false} });
-              event.title = title;
+      if(title=="Print: Name"){
+        title = "default, change or delete";
+        event.title = title;
+      }
+            else{  event.title = title;
+
+            }
               start=moment(event.start).format('YYYY-MM-DD HH:MM');
         		  if (event.end==null){
         		  event.end = event.start;
