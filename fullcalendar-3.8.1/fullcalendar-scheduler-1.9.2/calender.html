@@ -140,17 +140,17 @@ var config = {
         droppable: true, // this allows things to be dropped onto the calendar
         //aspectRatio: 3, unneeded due to height value being set
         scrollTime: '09:00',// undo default 6am scrollTime
-        nowIndicator: true,
-        slotLabelInterval:'01:00:00',
-        slotDuration:'00:15:00',
-        snapDuration:'00:15:00',
-        eventLongPressDelay:1000,
-        longPressDelay:1000,
-        selectLongPressDelay:1000,
-        defaultView: 'timelineDay',
-        resourceLabelText: '3D Printers',
+        nowIndicator: true,//sets indicator of current time
+        slotLabelInterval:'01:00:00',//1 hour slot labels with 15 minute intervals
+        slotDuration:'00:15:00',//sets slot intervals to 15 minutes
+        snapDuration:'00:15:00',//events snap to nearest 15 minute
+        eventLongPressDelay:1000,//sets delay for touch events
+        longPressDelay:1000,//sets delay for touch events
+        selectLongPressDelay:1000,//sets delay for touch events
+        defaultView: 'timelineDay',//sets timeline view
+        resourceLabelText: '3D Printers',//label for resource column
 	  resourceAreaHeight: '100%',
-	  eventOverlap: false,
+	  eventOverlap: false,//events cannot overlap
 	  events: arr,
       resources: [
         { id: 'a', title: 'MakerBot 1' },
@@ -159,8 +159,8 @@ var config = {
 		    { id: 'd', title: 'MakerBot Z18', eventColor: 'red' },
     		{ id: 'e', title: 'Taz 6', eventColor: '#77f442' },
       //{ id: 'f', title: 'Robo1', eventColor: 'cyan' }, robo printers, commented out as not avaiable yet
-	  //{ id: 'g', title: 'Robo2', eventColor: 'maroon' },
-	  //{ id: 'h', title: 'Robo3', eventColor: 'purple' },
+	  //{ id: 'g', title: 'Robo2', eventColor: 'maroon' },r obo printers, commented out as not avaiable yet
+	  //{ id: 'h', title: 'Robo3', eventColor: 'purple' }, robo printers, commented out as not avaiable yet
       ],
       drop: function(date, jsEvent, ui, resourceId) {
         console.log('drop', date.format(), resourceId);
@@ -185,10 +185,12 @@ var config = {
         else{
         database = firebase.database();
     var firebaseRef=firebase.database().ref('sandbox-ui/events/'+h);
+    //updating firebase data for event
       firebaseRef.update({resourceId:event.resourceId});
       firebaseRef.update({start:event.start.format('YYYY-MM-DD HH:mm')});
       firebaseRef.update({end:event.end.format('YYYY-MM-DD HH:mm')});
       $('#calendar').fullCalendar('updateEvent',event);
+        //rerendering events, with new event data after updates
     $("#calendar").fullCalendar('removeEvents');
     gotData(eventdata);
     $("#calendar").fullCalendar('addEventSource', arr);
@@ -199,13 +201,7 @@ var config = {
   eventResize: function(event) {
         var duration = moment.duration(event.end - event.start);
           if (event.title=="Print: Name"){
-            //alert(h);event.end=event.end;
-            //var dur=event.start.format('YYYY-MM-DD HH:mm:SS')-event.end.format('YYYY-MM-DD HH:mm:SS');
-          //alert("Length of Print:"+ duration.hours()+' hours:'+duration.minutes()+' minutes')
-            //var dur=event.start.format('YYYY-MM-DD HH:mm')-event.end.format('YYYY-MM-DD HH:mm');
-          //  alert(event.start.format('YYYY-MM-DD HH:mm'));
-        //    alert(event.end.format('YYYY-MM-DD HH:mm'));
-          alert("Length of Print:"+ duration.hours()+' hours:'+duration.minutes()+' minutes')
+          alert("Length of Print:"+ duration.hours()+' hours:'+duration.minutes()+' minutes');//alerting length of print
           	$('#calendar').fullCalendar('updateEvent',event);
           }
         //set h to be the value of key, which currently is the last key in the eventdata snapshot from firebase
@@ -215,15 +211,17 @@ var config = {
     //alert(h);
     database = firebase.database();
     var firebaseRef=firebase.database().ref('sandbox-ui/events/'+h);
-     alert("Length of Print:"+ duration.hours()+' hours:'+duration.minutes()+' minutes');
+     alert("Length of Print:"+ duration.hours()+' hours:'+duration.minutes()+' minutes');//alerting length of print
   // alert(event.start);
      //alert(event.end);
-    $('#calendar').fullCalendar('updateEvent',event);
+    $('#calendar').fullCalendar('updateEvent',event);//updating event with new info
+    //block to update the events database information
     firebaseRef.update({allDay:false});
     firebaseRef.update({start:event.start.format('YYYY-MM-DD HH:mm')});
     firebaseRef.update({end:event.end.format('YYYY-MM-DD HH:mm')});
   firebaseRef.update({id:count-1});
   firebaseRef.update({resourceId:event.resourceId});
+  //rerendering events, with new event data after updates
     $("#calendar").fullCalendar('removeEvents');
     gotData(eventdata);
     $("#calendar").fullCalendar('addEventSource', arr);
@@ -246,6 +244,7 @@ var config = {
      if (h==undefined){
        database = firebase.database();
        var firebaseRef=firebase.database().ref('sandbox-ui/events').push();
+       //seting new firebase data child in events directory
        firebaseRef.child("title").set(event.title);
          firebaseRef.child("allDay").set(false);
           firebaseRef.child("start").set(event.start.format('YYYY-MM-DD HH:mm'));
@@ -254,6 +253,7 @@ var config = {
             firebaseRef.child("resourceId").set(event.resourceId);
             $('#calendar').fullCalendar('updateEvent',event);
        console.log(count);
+         //rerendering events, with new event data after updates
        $("#calendar").fullCalendar('removeEvents');
        gotData(eventdata);
        $("#calendar").fullCalendar('addEventSource', arr);
@@ -262,8 +262,7 @@ var config = {
      else{
     database = firebase.database();
     var firebaseRef=firebase.database().ref('sandbox-ui/events'+h);
-  //  firebaseRef.update({start:start.format('YYYY-MM-DDTHH:MM:SS')});
-  //  firebaseRef.update({end:end.format('YYYY-MM-DDTHH:MM:SS')});
+//updating firebase data for event
     firebaseRef.update({title:event.title});
       firebaseRef.update({allDay:false});
       firebaseRef.update({start:event.start.format('YYYY-MM-DD HH:mm')});
@@ -273,6 +272,7 @@ var config = {
   //  var resourceId=event.resourceId;
   //  var resourceId=event.resourceId;
     console.log(count);
+      //rerendering events, with new event data after updates
     $('#calendar').fullCalendar('updateEvent',event);
     $("#calendar").fullCalendar('removeEvents');
     gotData(eventdata);
@@ -286,28 +286,21 @@ var config = {
     //  alert(event.id);
     //  alert(h);
        event.title = title;
-  //ar idforchange= snapshot.val();
-//rootRef.child(rowId).remove()
-//event.title = title;
-//alert(event.title);
-database = firebase.database();
-firebaseRef=firebase.database().ref('sandbox-ui/events/'+h);
-firebaseRef.update({title:event.title});
-$('#calendar').fullCalendar('updateEvent',event);
-$("#calendar").fullCalendar('removeEvents');
-gotData(eventdata);
-$("#calendar").fullCalendar('addEventSource', arr);
-$('#calendar').fullCalendar( 'rerenderEvents');
+       database = firebase.database();
+       firebaseRef=firebase.database().ref('sandbox-ui/events/'+h);
+       //updating event title
+       firebaseRef.update({title:event.title});
+       $('#calendar').fullCalendar('updateEvent',event);
+  //rerendering events, with new event data after updates
+  $("#calendar").fullCalendar('removeEvents');
+  gotData(eventdata);
+  $("#calendar").fullCalendar('addEventSource', arr);
+  $('#calendar').fullCalendar( 'rerenderEvents');
   }
     else if(confirm('Do you wish to Delete this print?')) {
       var h=keys[event.id];
-    // alert(event.id);      //salert(h);
-       //event.title = Deleted;
-       //ar idforchange= snapshot.val();
-       //rootRef.child(rowId).remove()
-       //event.title = title;
-       //alert(event.title);
        if(h==undefined){
+         //sets event.id to keep count accurate
          event.id=(count-1);
          h=(count-1);
            //alert(h);
@@ -315,11 +308,13 @@ $('#calendar').fullCalendar( 'rerenderEvents');
           $('#calendar').fullCalendar('updateEvent',event);
           database = firebase.database();
          firebaseRef=firebase.database().ref('sandbox-ui/events/'+h);
+         //sets null for data to 'erase' event
          firebaseRef.update({title:null});
          firebaseRef.update({start:null});
          firebaseRef.update({end:null});
          firebaseRef.update({resourceId:null});
          $('#calendar').fullCalendar('updateEvent',event);
+           //rerendering events, with new event data after updates
          $("#calendar").fullCalendar('removeEvents');
          gotData(eventdata);
          $("#calendar").fullCalendar('addEventSource', arr);
@@ -329,22 +324,21 @@ $('#calendar').fullCalendar( 'rerenderEvents');
        else{
          var h=keys[event.id];
         //alert(event.id);
-      // var duration = moment.duration(event.end - event.start);
          //alert(h);
          //alert(event.id);
          database = firebase.database();
          firebaseRef=firebase.database().ref('sandbox-ui/events/'+h);
+         //sets null for data to 'erase' event
        firebaseRef.update({title:null});
        firebaseRef.update({start:null});
        firebaseRef.update({end:null});
        firebaseRef.update({resourceId:null});
        $('#calendar').fullCalendar('updateEvent',event);
+         //rerendering events, with new event data after updates
        $("#calendar").fullCalendar('removeEvents');
        gotData(eventdata);
        $("#calendar").fullCalendar('addEventSource', arr);
        $('#calendar').fullCalendar( 'rerenderEvents');
-       //location.reload().reload();
-      // $('#calendar').fullCalendar('updateEvent',event);
 }
      }
 },
@@ -353,8 +347,10 @@ $('#calendar').fullCalendar( 'rerenderEvents');
 	$('#calendar').fullCalendar('render')
 });
 function goto(){
+  //goes to specified date
   var date = prompt('Enter date:', 'YYYY-MM-DD', { buttons: { Ok: true, Cancel: false} });
     $('#calendar').fullCalendar( 'gotoDate', date );
+      //rerendering events, with new event data after updates
     $("#calendar").fullCalendar('removeEvents');
     $("#calendar").fullCalendar('addEventSource', arr);
     $('#calendar').fullCalendar( 'rerenderEvents');
