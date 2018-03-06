@@ -203,8 +203,8 @@ var config = {
             //var dur=event.start.format('YYYY-MM-DD HH:mm:SS')-event.end.format('YYYY-MM-DD HH:mm:SS');
           //alert("Length of Print:"+ duration.hours()+' hours:'+duration.minutes()+' minutes')
             //var dur=event.start.format('YYYY-MM-DD HH:mm')-event.end.format('YYYY-MM-DD HH:mm');
-            alert(event.start.format('YYYY-MM-DD HH:mm'));
-            alert(event.end.format('YYYY-MM-DD HH:mm'));
+          //  alert(event.start.format('YYYY-MM-DD HH:mm'));
+        //    alert(event.end.format('YYYY-MM-DD HH:mm'));
           alert("Length of Print:"+ duration.hours()+' hours:'+duration.minutes()+' minutes')
           	$('#calendar').fullCalendar('updateEvent',event);
           }
@@ -216,8 +216,8 @@ var config = {
     database = firebase.database();
     var firebaseRef=firebase.database().ref('sandbox-ui/events/'+h);
      alert("Length of Print:"+ duration.hours()+' hours:'+duration.minutes()+' minutes');
-     alert(event.start);
-     alert(event.end);
+  // alert(event.start);
+     //alert(event.end);
     $('#calendar').fullCalendar('updateEvent',event);
     firebaseRef.update({allDay:false});
     firebaseRef.update({start:event.start.format('YYYY-MM-DD HH:mm')});
