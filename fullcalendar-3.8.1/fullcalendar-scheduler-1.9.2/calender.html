@@ -35,6 +35,7 @@ var arr;
 var k;
 var start;
 var end;
+var duration;
 //url: 'https://sandbox-ui.firebaseio.com/sandbox-ui/events.json';
 //config info for the firebase database
 var config = {
@@ -114,16 +115,6 @@ var config = {
     $('#calendar').fullCalendar({
       schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
       //now: $('#calendar').fullCalendar('getDate'),
-	  height:"auto",//set height of rendered calender, auto is set to allow for Fullcalender to determine best fit size
-	  //contentHeight:"auto",
-      editable: true, // enable draggable events
-      droppable: true, // this allows things to be dropped onto the calendar
-      //aspectRatio: 3, unneeded due to height value being set
-      scrollTime: '09:00',
-      nowIndicator: true,// undo default 6am scrollTime
-      slotDuration: '00:30:00',
-
-
 	  // days of week. an array of zero-based day of week integers (0=Sunday), broken into two arrays to allow for different hours for weekend days
 	  businessHours:[ {
     dow: [ 1, 2, 3, 4, 5 ], // Monday - Friday
@@ -143,9 +134,21 @@ var config = {
         center: 'title',
         right: 'timelineDay'
       },
-      defaultView: 'timelineDay',
-	  slotDuration:"00:30",
-      resourceLabelText: '3D Printers',
+      height:"auto",//set height of rendered calender, auto is set to allow for Fullcalender to determine best fit size
+      //contentHeight:"auto",
+        editable: true, // enable draggable events
+        droppable: true, // this allows things to be dropped onto the calendar
+        //aspectRatio: 3, unneeded due to height value being set
+        scrollTime: '09:00',// undo default 6am scrollTime
+        nowIndicator: true,
+        slotLabelInterval:'01:00:00',
+        slotDuration:'00:15:00',
+        snapDuration:'00:15:00',
+        eventLongPressDelay:1000,
+        longPressDelay:1000,
+        selectLongPressDelay:1000,
+        defaultView: 'timelineDay',
+        resourceLabelText: '3D Printers',
 	  resourceAreaHeight: '100%',
 	  eventOverlap: false,
 	  events: arr,
@@ -161,30 +164,47 @@ var config = {
       ],
       drop: function(date, jsEvent, ui, resourceId) {
         console.log('drop', date.format(), resourceId);
+
       },
       eventReceive: function(event) { // called when a proper external event is dropped
         console.log('eventReceive', event);
+          duration = moment.duration(event.end - event.start);
+          //var dur=event.start.format('YYYY-MM-DD HH:mm:SS')-event.end.format('YYYY-MM-DD HH:mm:SS');
+          alert("Length of Print:"+ duration.hours()+' hours:'+duration.minutes()+' minutes')
+          $('#calendar').fullCalendar('updateEvent',event);
+
       },
       eventDrop: function(event) { // called when an event (already on the calendar) is moved
         console.log('eventDrop', event);
 
         var h=keys[event.id];
         //set h to be the value of key, which currently is the last key in the eventdata snapshot from firebase
+        if(h==undefined){
+
+        }
+        else{
         database = firebase.database();
     var firebaseRef=firebase.database().ref('sandbox-ui/events/'+h);
       firebaseRef.update({resourceId:event.resourceId});
-      firebaseRef.update({start:event.start.format('YYYY-MM-DD HH:MM')});
-      firebaseRef.update({end:event.end.format('YYYY-MM-DD HH:MM')});
+      firebaseRef.update({start:event.start.format('YYYY-MM-DD HH:mm')});
+      firebaseRef.update({end:event.end.format('YYYY-MM-DD HH:mm')});
+      $('#calendar').fullCalendar('updateEvent',event);
     $("#calendar").fullCalendar('removeEvents');
     gotData(eventdata);
     $("#calendar").fullCalendar('addEventSource', arr);
     $('#calendar').fullCalendar( 'rerenderEvents');
+  }
+
 },
   eventResize: function(event) {
         var duration = moment.duration(event.end - event.start);
           if (event.title=="Print: Name"){
-            //alert(h);
-            //var dur=event.start.format('YYYY-MM-DD HH:MM')-event.end.format('YYYY-MM-DD HH:MM');
+            //alert(h);event.end=event.end;
+            //var dur=event.start.format('YYYY-MM-DD HH:mm:SS')-event.end.format('YYYY-MM-DD HH:mm:SS');
+          //alert("Length of Print:"+ duration.hours()+' hours:'+duration.minutes()+' minutes')
+            //var dur=event.start.format('YYYY-MM-DD HH:mm')-event.end.format('YYYY-MM-DD HH:mm');
+            alert(event.start.format('YYYY-MM-DD HH:mm'));
+            alert(event.end.format('YYYY-MM-DD HH:mm'));
           alert("Length of Print:"+ duration.hours()+' hours:'+duration.minutes()+' minutes')
           	$('#calendar').fullCalendar('updateEvent',event);
           }
@@ -195,21 +215,64 @@ var config = {
     //alert(h);
     database = firebase.database();
     var firebaseRef=firebase.database().ref('sandbox-ui/events/'+h);
-    if(event.end==null){
-      var ender= event.start.add(moment.duration("1:00:00"));
-      alert("Length of Print:"+ duration.hours()+' hours:'+duration.minutes()+' minutes');
-      firebaseRef.update({start:event.start.format('YYYY-MM-DD HH:MM')});
-      firebaseRef.update({end:event.end.format('YYYY-MM-DD HH:MM')});
-      $('#calendar').fullCalendar('updateEvent',event);
-      $("#calendar").fullCalendar('removeEvents');
-      gotData(eventdata);
-      $("#calendar").fullCalendar('addEventSource', arr);
-      $('#calendar').fullCalendar( 'rerenderEvents');
+     alert("Length of Print:"+ duration.hours()+' hours:'+duration.minutes()+' minutes');
+     alert(event.start);
+     alert(event.end);
+    $('#calendar').fullCalendar('updateEvent',event);
+    firebaseRef.update({allDay:false});
+    firebaseRef.update({start:event.start.format('YYYY-MM-DD HH:mm')});
+    firebaseRef.update({end:event.end.format('YYYY-MM-DD HH:mm')});
+  firebaseRef.update({id:count-1});
+  firebaseRef.update({resourceId:event.resourceId});
+    $("#calendar").fullCalendar('removeEvents');
+    gotData(eventdata);
+    $("#calendar").fullCalendar('addEventSource', arr);
+     $('#calendar').fullCalendar( 'rerenderEvents');
+}
+ },
+	  eventClick: function(event, jsEvent, view) {
+      //var things=event.id-1;
+		  //var length=event.end.diff(event.start, 'minutes');
+		  //var length=(end-start);
+  if (event.title==="Print: Name"){
+    var title = prompt('Event Title:', event.title, { buttons: { Ok: true, Cancel: false} });
+    if(title==="Print: Name"){
+      event.title="change";
     }
     else{
-    alert("Length of Print:"+ duration.hours()+' hours:'+duration.minutes()+' minutes');
-    firebaseRef.update({start:event.start.format('YYYY-MM-DD HH:MM')});
-    firebaseRef.update({end:event.end.format('YYYY-MM-DD HH:MM')});
+    event.title = title;
+}
+     var h=keys[event.id];
+     if (h==undefined){
+       database = firebase.database();
+       var firebaseRef=firebase.database().ref('sandbox-ui/events').push();
+       firebaseRef.child("title").set(event.title);
+         firebaseRef.child("allDay").set(false);
+          firebaseRef.child("start").set(event.start.format('YYYY-MM-DD HH:mm'));
+           firebaseRef.child("end").set(event.end.format('YYYY-MM-DD HH:mm'));
+           firebaseRef.child("id").set(count-1);
+            firebaseRef.child("resourceId").set(event.resourceId);
+            $('#calendar').fullCalendar('updateEvent',event);
+       console.log(count);
+       $("#calendar").fullCalendar('removeEvents');
+       gotData(eventdata);
+       $("#calendar").fullCalendar('addEventSource', arr);
+       $('#calendar').fullCalendar( 'rerenderEvents');
+     }
+     else{
+    database = firebase.database();
+    var firebaseRef=firebase.database().ref('sandbox-ui/events'+h);
+  //  firebaseRef.update({start:start.format('YYYY-MM-DDTHH:MM:SS')});
+  //  firebaseRef.update({end:end.format('YYYY-MM-DDTHH:MM:SS')});
+    firebaseRef.update({title:event.title});
+      firebaseRef.update({allDay:false});
+      firebaseRef.update({start:event.start.format('YYYY-MM-DD HH:mm')});
+      firebaseRef.update({end:event.end.format('YYYY-MM-DD HH:mm')});
+    firebaseRef.update({id:count-1});
+    firebaseRef.update({resourceId:event.resourceId});
+  //  var resourceId=event.resourceId;
+  //  var resourceId=event.resourceId;
+    console.log(count);
     $('#calendar').fullCalendar('updateEvent',event);
     $("#calendar").fullCalendar('removeEvents');
     gotData(eventdata);
@@ -217,48 +280,6 @@ var config = {
     $('#calendar').fullCalendar( 'rerenderEvents');
   }
 }
- },
-	  eventClick: function(event, jsEvent, view) {
-      //var things=event.id-1;
-		  //var length=event.end.diff(event.start, 'minutes');
-		  //var length=(end-start);
-  if (event.title=="Print: Name"){
-    var title = prompt('Event Title:', event.title, { buttons: { Ok: true, Cancel: false} });
-      if(title=="Print: Name"){
-        title = "default, change or delete";
-        event.title = title;
-      }
-            else{  event.title = title;
-
-            }
-              start=moment(event.start).format('YYYY-MM-DD HH:MM');
-        		  if (event.end==null){
-        		  event.end = event.start;
-        		  event.end = event.end.add(moment.duration("1:00:00"));
-        		  var allday='FALSE';
-        		   var end= moment(event.end).format('YYYY-MM-DD HH:MM');
-        		  }
-        		  else{
-        		  var end= moment(event.end).format('YYYY-MM-DD HH:MM');
-        		  }
-		database = firebase.database();
-		var firebaseRef=firebase.database().ref('sandbox-ui/events').push();
-		firebaseRef.child("resourceId").set(event.resourceId);
-		var resourceId=event.resourceId;
-		firebaseRef.child("start").set(start);
-		firebaseRef.child("end").set(end);
-		firebaseRef.child("title").set(event.title);
-	    firebaseRef.child("allDay").set(false);
-		firebaseRef.child("id").set(count-1);
-    console.log(count);
-    $('#calendar').fullCalendar('updateEvent',event);
-    $("#calendar").fullCalendar('removeEvents');
-    gotData(eventdata);
-    $("#calendar").fullCalendar('addEventSource', arr);
-    $('#calendar').fullCalendar( 'rerenderEvents');
-		//firebaseRef.child("length").set(length);
-		//$('#calender').fullCalendar( 'refetchEvents' );
-  }
   else if(confirm('Do you wish to rename this print?')) {
       var title = prompt('Event Title:', event.title, { buttons: { Ok: true, Cancel: false} });
       var h=keys[event.id];
@@ -280,10 +301,7 @@ $('#calendar').fullCalendar( 'rerenderEvents');
   }
     else if(confirm('Do you wish to Delete this print?')) {
       var h=keys[event.id];
-    // alert(event.id);
-    database = firebase.database();
-    firebaseRef=firebase.database().ref('sandbox-ui/events/'+h);
-      //salert(h);
+    // alert(event.id);      //salert(h);
        //event.title = Deleted;
        //ar idforchange= snapshot.val();
        //rootRef.child(rowId).remove()
@@ -295,6 +313,7 @@ $('#calendar').fullCalendar( 'rerenderEvents');
            //alert(h);
            //alert(event.id);
           $('#calendar').fullCalendar('updateEvent',event);
+          database = firebase.database();
          firebaseRef=firebase.database().ref('sandbox-ui/events/'+h);
          firebaseRef.update({title:null});
          firebaseRef.update({start:null});
@@ -310,7 +329,7 @@ $('#calendar').fullCalendar( 'rerenderEvents');
        else{
          var h=keys[event.id];
         //alert(event.id);
-       var duration = moment.duration(event.end - event.start);
+      // var duration = moment.duration(event.end - event.start);
          //alert(h);
          //alert(event.id);
          database = firebase.database();
@@ -419,8 +438,8 @@ height:3rem !important;
     <br>
   <div id='wrap'>
     <div id='external-events'>
-      <h4>Drag me onto calender!</h4>
-      <div class='fc-event' data-duration="01:00">Print: Name</div>
+      <h4>Drag me onto the calendar!</h4>
+      <div class='fc-event' data-duration="00:15:00">Print: Name</div>
       <div>
       <button type="button" onclick="goto()" > Go to Date</button></a>
       </div>
