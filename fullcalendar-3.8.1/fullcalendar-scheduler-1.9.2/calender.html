@@ -87,6 +87,7 @@ var config = {
 	 console.log(arr);
   }
 
+
   $(function() { // document ready
     /* initialize the external events
     -----------------------------------------------------------------*/
@@ -111,7 +112,9 @@ var config = {
 
     /* initialize the calendar
     -----------------------------------------------------------------*/
-	var database = firebase.database().ref('sandbox-ui/events');//setting database to be the reference to our events node
+	var database = firebase.database().ref('sandbox-ui/events');
+  var scrollTime = moment().format("HH:mm");
+//setting database to be the reference to our events node
     $('#calendar').fullCalendar({
       schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
       //now: $('#calendar').fullCalendar('getDate'),
@@ -139,7 +142,7 @@ var config = {
         editable: true, // enable draggable events
         droppable: true, // this allows things to be dropped onto the calendar
         //aspectRatio: 3, unneeded due to height value being set
-        scrollTime: '09:00',// undo default 6am scrollTime
+        scrollTime: scrollTime,// undo default 6am scrollTime
         nowIndicator: true,//sets indicator of current time
         slotLabelInterval:'01:00:00',//1 hour slot labels with 15 minute intervals
         slotDuration:'00:15:00',//sets slot intervals to 15 minutes
