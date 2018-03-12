@@ -316,6 +316,7 @@ var config = {
          firebaseRef.update({start:null});
          firebaseRef.update({end:null});
          firebaseRef.update({resourceId:null});
+         firebaseRef.update({id:count-1});
          $('#calendar').fullCalendar('updateEvent',event);
            //rerendering events, with new event data after updates
          $("#calendar").fullCalendar('removeEvents');
