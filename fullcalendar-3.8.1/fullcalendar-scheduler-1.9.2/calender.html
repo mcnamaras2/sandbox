@@ -257,9 +257,21 @@ submit.onclick=function(){
   var h=keys[event.id];
    titles= document.getElementById('ptitle').value;
    console.log(titles);
+   if(titles==''){
+     titles=event.title;
+   }
+   console.log(titles);
  starts= document.getElementById('pstart').value;
+  console.log(starts);
+ if(starts==''){
+   starts=event.start.format('YYYY-MM-DD HH:mm');
+ }
  console.log(starts);
  ends= document.getElementById('pend').value;
+ console.log(ends);
+ if(ends==''){
+   ends=event.end.format('YYYY-MM-DD HH:mm');
+ }
  console.log(ends);
  event.start= starts;
  console.log(event.start);
@@ -296,15 +308,15 @@ else{
   firebaseRef=firebase.database().ref('sandbox-ui/events/'+h);
     //updating firebase data for event
     firebaseRef.update({end:event.end});
-    console.log(event.end);
+    //console.log(event.end);
     firebaseRef.update({start:event.start});
-    console.log(event.start);
+    //console.log(event.start);
     firebaseRef.update({title:event.title});
-    console.log(event.title);
+    //console.log(event.title);
     //  firebaseRef.update({allDay:false});
       //firebaseRef.update({id:count-1});
       //firebaseRef.update({resourceId:event.resourceId});
-      console.log(count);
+    //  console.log(count);
       //rerendering events, with new event data after updates
     $('#calendar').fullCalendar('updateEvent',event);
     $("#calendar").fullCalendar('removeEvents');
@@ -345,8 +357,7 @@ del.onclick=function(){
        modal.style.display = "none";
      }
      else{
-       var h=keys[event.id];
-      //alert(event.id);
+      console.log(event.id);
        //alert(h);
        //alert(event.id);
        database = firebase.database();
