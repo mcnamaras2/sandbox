@@ -302,7 +302,6 @@ submit.onclick=function(){
        document.getElementById("forms").reset();
      }
 else{
-   var h=keys[event.id];
    console.log(h);
    database = firebase.database();
   firebaseRef=firebase.database().ref('sandbox-ui/events/'+h);
