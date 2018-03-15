@@ -345,13 +345,11 @@ del.onclick=function(){
     var h=keys[event.id];
      if(h==undefined){
        //sets event.id to keep count accurate
-       event.id=(count-1);
-       h=(count-1);
          //alert(h);
          //alert(event.id);
         $('#calendar').fullCalendar('updateEvent',event);
         database = firebase.database();
-       firebaseRef=firebase.database().ref('sandbox-ui/events/'+h);
+       firebaseRef=firebase.database().ref('sandbox-ui/events/').push();
        //sets null for data to 'erase' event
        firebaseRef.update({title:null});
        firebaseRef.update({start:null});
