@@ -254,6 +254,8 @@ span.onclick = function() {
     }
 }
 submit.onclick=function(){
+    var starttime;
+    var endtime;
   var h=keys[event.id];
    titles= document.getElementById('ptitle').value;
    console.log(titles);
@@ -264,18 +266,30 @@ submit.onclick=function(){
  starts= document.getElementById('pstart').value;
   console.log(starts);
  if(starts==''){
-   starts=event.start.format('YYYY-MM-DD HH:mm');
+   starttime=event.start.format('YYYY-MM-DD HH:mm');
+ }
+ else if(starts.length>5){
+   starttime=starts;
+ }
+ else{
+    starttime=(event.start.format('YYYY-MM-DD')+' '+starts);
  }
  console.log(starts);
  ends= document.getElementById('pend').value;
  console.log(ends);
  if(ends==''){
-   ends=event.end.format('YYYY-MM-DD HH:mm');
+   endtime=event.end.format('YYYY-MM-DD HH:mm');
+ }
+ else if(ends.length>5){
+   endtime=ends;
+ }
+ else{
+    endtime=(event.end.format('YYYY-MM-DD')+' '+ends);
  }
  console.log(ends);
- event.start= starts;
+ event.start=starttime;
  console.log(event.start);
- event.end= ends;
+ event.end= endtime;
  console.log(event.end);
  event.title = titles;
  console.log(event.title);
@@ -411,6 +425,9 @@ function goto(){
     padding-top: 1rem;
     text-align: center;
   }
+  #forms{
+    background-color:#616161;
+  }
   #wrap {
     width: 70rem;
     margin: 0 auto;
@@ -454,6 +471,15 @@ function goto(){
     color:white;
     height:100%;
   }
+  #sub{
+    background-color: green;
+    color: white;
+
+  }
+  #del{
+    background-color: red;
+    color: white;
+  }
   .fc-widget-content{
      height: 3.5rem !important;
 }
@@ -464,6 +490,9 @@ height:3rem !important;
   margin-top: .7rem;
   height: 2.75em !important;
 }
+.forms{
+  font-size: .75rem;
+}
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
@@ -473,17 +502,18 @@ height:3rem !important;
     width: 100%; /* Full width */
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
+    background-color:#616161; /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
 /* Modal Content/Box */
 .modal-content {
-    background-color: #fefefe;
+    background-color:#616161;
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
     width: 80%; /* Could be more or less, depending on screen size */
+    color:white;
 }
 
 /* The Close Button */
@@ -531,13 +561,14 @@ height:3rem !important;
     <span class="close">&times;</span>
     <form method="post" id="forms">
       <div>
-        <h3>Print Info</h3>
+        <h2>Print Info</h2>
         <label for="ptitle" class="ui-hidden-accessible">Print Title:</label>
         <input type="text" name="Name" id="ptitle" placeholder="Title">
         <label for="pstart" class="ui-hidden-accessible">Start Time:</label>
-        <input type="text" name="pstart" id="pstart" placeholder="2018-03-12 13:30">
+        <input type="text" name="pstart" id="pstart" placeholder="YYYY-MM-DD HH:mm">
         <label for="pstart" class="ui-hidden-accessible">End Time:</label>
-        <input type="text" name="pend" id="pend" placeholder="2018-03-12 15:15">
+        <input type="text" name="pend" id="pend" placeholder="YYYY-MM-DD HH:mm">
+        <br><br>
         <button type="button" class="sub" id='sub' data-dismiss="modal">Submit</button>
         <button type="button" class="del" id='del' data-dismiss="modal">Delete Print</button>
       </div>
