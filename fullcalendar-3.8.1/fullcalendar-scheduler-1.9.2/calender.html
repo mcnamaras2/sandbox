@@ -204,14 +204,14 @@ var config = {
 },
   eventResize: function(event) {
         var duration = moment.duration(event.end - event.start);
-          if (event.title=="Print: Name"){
+           var h=keys[event.id];
+          if (h==undefined){
           alert("Length of Print:"+ duration.hours()+' hours:'+duration.minutes()+' minutes');//alerting length of print
           	$('#calendar').fullCalendar('updateEvent',event);
           }
         //set h to be the value of key, which currently is the last key in the eventdata snapshot from firebase
    else {
      //alert(event.id);
-     var h=keys[event.id];
     //alert(h);
     database = firebase.database();
     var firebaseRef=firebase.database().ref('sandbox-ui/events/'+h);
@@ -347,15 +347,9 @@ del.onclick=function(){
        //sets event.id to keep count accurate
          //alert(h);
          //alert(event.id);
-        $('#calendar').fullCalendar('updateEvent',event);
-        database = firebase.database();
-       firebaseRef=firebase.database().ref('sandbox-ui/events/').push();
-       //sets null for data to 'erase' event
-       firebaseRef.update({title:null});
-       firebaseRef.update({start:null});
-       firebaseRef.update({end:null});
-       firebaseRef.update({resourceId:null});
-       firebaseRef.update({id:count-1});
+         event.tite=null;
+         event.start=null;
+         event.end=null;
        $('#calendar').fullCalendar('updateEvent',event);
          //rerendering events, with new event data after updates
        $("#calendar").fullCalendar('removeEvents');
