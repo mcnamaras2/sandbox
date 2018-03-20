@@ -232,6 +232,12 @@ var config = {
  },
 	  eventClick: function(event, jsEvent, view) {
     //  document.getElementById('info').style.visibility='visible';
+    document.getElementById("forms").addEventListener("keyup", function(event) {
+    event.preventDefault();
+    if (event.keyCode === 13) {
+        document.getElementById("sub").click();
+    }
+});
     var modal = document.getElementById('myModal');
     modal.style.display = "block";
     var submit=document.getElementById('sub');
