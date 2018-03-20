@@ -223,8 +223,6 @@ var config = {
     firebaseRef.update({allDay:false});
     firebaseRef.update({start:event.start.format('YYYY-MM-DD HH:mm')});
     firebaseRef.update({end:event.end.format('YYYY-MM-DD HH:mm')});
-  firebaseRef.update({id:count-1});
-  firebaseRef.update({resourceId:event.resourceId});
   //rerendering events, with new event data after updates
     $("#calendar").fullCalendar('removeEvents');
     gotData(eventdata);
