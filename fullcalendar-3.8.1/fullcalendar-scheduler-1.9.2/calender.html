@@ -14,23 +14,23 @@
 <script src='scheduler.min.js'></script>
 <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
 <script>
-var Name;
-var evstart;
-var evend;
-var printer;
+var Name; //variable used for the event name when being pulled from db JSON
+var evstart;//variable used for the event start time/date when being pulled from db JSON
+var evend;//variable used for the event end time/date when being pulled from db JSON
+var printer;//variable used for event resourceID when being pulled from the db JSON
 var i=0;
 var j=0;
 var id=0;
-var allDay;
+var allDay;//var for allday, not used much
 var ID;
 var obj;
 var count=0;
-var eventdata ;
-var data;
-var datas;
-var key;
-var keys;
-var arr;
+var eventdata ;//cariable for the eventdata, which is set to be eventdata pulled from db JSON
+var data;//variable used to convert db json object to array for feed into FullCalendar events
+var datas;//used when pulling data out of firebase database snapshot
+var key;//used to assign key values from snapshot
+var keys;//used to get key values for db objects to allow for changes to be made to the right object
+var arr;//array used to convert JSON object from DB into array accepted by fullcalendar events
 var k;
 var start;
 var end;
@@ -160,11 +160,11 @@ var config = {
         { id: 'c', title: 'MakerBot 3', eventColor: '#af41f4' },
 		    { id: 'd', title: 'MakerBot Z18', eventColor: 'red' },
     		{ id: 'e', title: 'Taz 6', eventColor: '#43A047' },
-  //    { id: 'f', title: 'Robo1', eventColor: 'cyan' },
-	//  { id: 'g', title: 'Robo2', eventColor: 'maroon' },
-	//  { id: 'h', title: 'Robo3', eventColor: 'purple' },
-  //  { id: 'i', title: 'Robo R2', eventColor: '#78909C' },
-  //  { id: 'j', title: 'PrintrBot', eventColor: '#3F51B5' },
+        { id: 'f', title: 'Robo R1 1', eventColor: 'cyan' },
+	      { id: 'g', title: 'Robo R1 2', eventColor: 'maroon' },
+	      { id: 'h', title: 'Robo R1 3', eventColor: 'purple' },
+        { id: 'i', title: 'Robo R1 4', eventColor: '#78909C' },
+        { id: 'j', title: 'Robo R2', eventColor: '#3F51B5' },
       ],
       drop: function(date, jsEvent, ui, resourceId) {
         console.log('drop', date.format(), resourceId);
@@ -557,7 +557,7 @@ height:3rem !important;
     <form method="post" id="forms">
       <div>
         <h2>Print Info</h2>
-        <label for="ptitle" class="ui-hidden-accessible">Print Title:</label>
+        <label for="ptitle" class="ui-hidden-accessible">Email:</label>
         <input type="text" name="Name" id="ptitle" placeholder="Title">
         <label for="pstart" class="ui-hidden-accessible">Start Time:</label>
         <input type="text" name="pstart" id="pstart" placeholder="YYYY-MM-DD HH:mm">
