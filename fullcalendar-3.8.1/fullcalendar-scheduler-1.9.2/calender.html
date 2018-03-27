@@ -233,20 +233,21 @@ var config = {
 	  eventClick: function(event, jsEvent, view) {
       var e;
     //  document.getElementById('info').style.visibility='visible';
+    //function to submit modal print information after enter key pressed
     document.getElementById("content").addEventListener("keyup", function(e) {
     //event.preventDefault();
+    //13 is the keycode for enter key
     if (e.keyCode === 13) {
         document.getElementById("sub").click();
     }
-    if (e.keyCode === 27) {
-      alert("esc!");
-      span.click();
-        }
 });
+//function to close modal on press of esc button
 window.addEventListener('keydown', function(e){
 //event.preventDefault();
+//27 is the keycode for escape key
 if (e.keyCode === 27) {
   span.click();
+  //console.log("esc");
   document.getElementById("forms").reset();
     }
 });
@@ -268,6 +269,7 @@ span.onclick = function() {
 
     }
 }
+//funtion for when submit button pressed
 submit.onclick=function(){
     var starttime;
     var endtime;
@@ -575,7 +577,7 @@ height:3rem !important;
       <div>
         <h2>Print Info</h2>
         <label for="ptitle" class="ui-hidden-accessible">Email:</label>
-        <input type="text" name="Name" id="ptitle" placeholder="Title">
+        <input type="text" name="Name" id="ptitle" placeholder="Email@wit.edu">
         <label for="pstart" class="ui-hidden-accessible">Start Time:</label>
         <input type="text" name="pstart" id="pstart" placeholder="YYYY-MM-DD HH:mm">
         <label for="pstart" class="ui-hidden-accessible">End Time:</label>
