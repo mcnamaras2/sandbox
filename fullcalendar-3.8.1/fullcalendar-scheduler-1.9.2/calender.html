@@ -231,11 +231,23 @@ var config = {
 }
  },
 	  eventClick: function(event, jsEvent, view) {
+      var e;
     //  document.getElementById('info').style.visibility='visible';
-    document.getElementById("forms").addEventListener("keyup", function(event) {
-    event.preventDefault();
-    if (event.keyCode === 13) {
+    document.getElementById("content").addEventListener("keyup", function(e) {
+    //event.preventDefault();
+    if (e.keyCode === 13) {
         document.getElementById("sub").click();
+    }
+    if (e.keyCode === 27) {
+      alert("esc!");
+      span.click();
+        }
+});
+window.addEventListener('keydown', function(e){
+//event.preventDefault();
+if (e.keyCode === 27) {
+  span.click();
+  document.getElementById("forms").reset();
     }
 });
     var modal = document.getElementById('myModal');
@@ -469,11 +481,14 @@ function goto(){
   #sub{
     background-color: green;
     color: white;
+    font-size: 1rem;
+    margin-right: 1.2rem;
 
   }
   #del{
     background-color: red;
     color: white;
+    font-size: 1rem;
   }
   .fc-widget-content{
      height: 3.5rem !important;
@@ -504,16 +519,18 @@ height:3rem !important;
 /* Modal Content/Box */
 .modal-content {
     background-color:#616161;
-    margin: 15% auto; /* 15% from the top and centered */
+    margin: 10% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
     width: 80%; /* Could be more or less, depending on screen size */
     color:white;
+    border-radius: 25px;
+    font-size: 1rem;
 }
 
 /* The Close Button */
 .close {
-    color: #aaa;
+    color: red;
     float: right;
     font-size: 28px;
     font-weight: bold;
@@ -552,8 +569,8 @@ height:3rem !important;
 <div id="myModal" class="modal">
 
   <!-- Modal content -->
-  <div class="modal-content">
-    <span class="close">&times;</span>
+  <div class="modal-content" id="content">
+    <button type="button" class="close" id="close" data-dismiss="modal">&times;</button>
     <form method="post" id="forms">
       <div>
         <h2>Print Info</h2>
