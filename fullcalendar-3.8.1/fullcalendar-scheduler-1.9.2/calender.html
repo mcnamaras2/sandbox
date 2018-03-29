@@ -35,6 +35,14 @@ var k;
 var start;
 var end;
 var duration;
+var avgcount=0;
+var duravgnum=0;
+var avg=0;
+var ap=0;
+var bp=0;
+var cp=0;
+var dp=0;
+var ep=0;
 //url: 'https://sandbox-ui.firebaseio.com/sandbox-ui/events.json';
 //config info for the firebase database
 var config = {
@@ -69,23 +77,60 @@ var config = {
 		//	console.log('start:',evstart);
             evend = eventdata[k].end;
 		//	console.log('end:',evend);
-			allDay = eventdata[k].allDay;
+			     allDay = eventdata[k].allDay;
 		//	console.log('allDay:',allDay);
-			printer = eventdata[k].resourceId;
+			     printer = eventdata[k].resourceId;
 		//	console.log('resourceId:',printer);
-			id = eventdata[k].id;
+			     id = eventdata[k].id;
 		//	console.log('id:',id);
-			i++;
-      count=i;
+      //  var theduration;
+        //theduration=moment.duration(evend - evstart);
+        var duration = moment.duration(moment(evend).diff(moment(evstart)));
+        var theduration = duration.asHours();
+        //console.log("Duration "+i+": "+ theduration+":hours ");
+        if(theduration>0){
+          duravgnum=duravgnum+theduration;
+            avgcount++;
+
+        }
+        if(eventdata[k].resourceId=='a'){
+            ap++;
+        }
+        if(eventdata[k].resourceId=='b'){
+            bp++;
+        }
+        if(eventdata[k].resourceId=='c'){
+            cp++;
+        }
+        if(eventdata[k].resourceId=='d'){
+          dp++;
+        }
+        if(eventdata[k].resourceId=='e'){
+          ep++;
+        }
+			     i++;
+           count=i;
 			}
+      avg=duravgnum/avgcount;
+      avg= avg.toPrecision(3);
+      console.log("number of prints: "+avgcount);
+      console.log("total length of all prints: "+duravgnum);
+      console.log("Average print length: "+avg+" hours");
+      console.log("number of prints on Makerbot 1: "+ap);
+      console.log("number of prints on Makerbot 2: "+bp);
+      console.log("number of prints on Makerbot 3: "+cp);
+      console.log("number of prints on Makerbot z18: "+dp);
+      console.log("number of prints on Taz: "+ep);
+      duravgnum= duravgnum.toPrecision(6);
+      document.getElementById("stat").innerHTML = "Number of Prints:"+avgcount+ ' &nbsp'+" Average Print Length:"+avg+"hours" + ' &nbsp'+" Total print time this semester: "+duravgnum+"hours";
 			});
 		 function gotData(data) {
     console.log(data);//taking the data from the database
 	 data=data;
 	 arr = Object.keys(data).map(function(k) { return data[k] });//converting from JSON object into an array for use with events function of Fullcalender
 	 console.log(arr);
-  }
 
+  }
 
   $(function() { // document ready
     /* initialize the external events
@@ -417,6 +462,7 @@ function goto(){
     $("#calendar").fullCalendar('addEventSource', arr);
     $('#calendar').fullCalendar( 'rerenderEvents');
 }
+
 </script>
 <style>
   body {
@@ -433,6 +479,10 @@ function goto(){
     color:white;
     padding-top: 1rem;
     text-align: center;
+  }
+  #stat{
+    color:white;
+    font-size: 1.1rem;
   }
   #forms{
     background-color:#616161;
@@ -559,15 +609,17 @@ height:3rem !important;
       <button type="button" onclick="goto()" > Go to Date</button></a>
       </div>
     </div>
+    <div>
+  <p id="stat"></p>
+    </div>
     <div id='calendar' style="width:85%"></div>
     <div style='clear:both'></div>
 	</div>
-</div>
 	<br><br>
 	<div>
 	<a a href="https://mcnamaras2.github.io/sandbox/"><button type="button"> Return to Sandbox Home Page</button></a>
 	</div>
-</div>
+
 <div id="myModal" class="modal">
 
   <!-- Modal content -->
