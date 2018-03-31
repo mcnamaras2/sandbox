@@ -43,6 +43,11 @@ var bp=0;
 var cp=0;
 var dp=0;
 var ep=0;
+var fp=0;
+var gp=0;
+var hp=0;
+var ip=0;
+var jp=0;
 //url: 'https://sandbox-ui.firebaseio.com/sandbox-ui/events.json';
 //config info for the firebase database
 var config = {
@@ -93,21 +98,6 @@ var config = {
             avgcount++;
 
         }
-        if(eventdata[k].resourceId=='a'){
-            ap++;
-        }
-        if(eventdata[k].resourceId=='b'){
-            bp++;
-        }
-        if(eventdata[k].resourceId=='c'){
-            cp++;
-        }
-        if(eventdata[k].resourceId=='d'){
-          dp++;
-        }
-        if(eventdata[k].resourceId=='e'){
-          ep++;
-        }
 			     i++;
            count=i;
 			}
@@ -129,10 +119,43 @@ var config = {
 	 data=data;
 	 arr = Object.keys(data).map(function(k) { return data[k] });//converting from JSON object into an array for use with events function of Fullcalender
 	 console.log(arr);
+   for(var h=0;h<arr.length;h++){
+   if(arr[h].resourceId=='a'){
+       ap++;
+   }
+   if(arr[h].resourceId=='b'){
+       bp++;
+   }
+   if(arr[h].resourceId=='c'){
+       cp++;
+   }
+   if(arr[h].resourceId=='d'){
+     dp++;
+   }
+   if(arr[h].resourceId=='e'){
+     ep++;
+   }
+   if(arr[h].resourceId=='f'){
+       fp++;
+   }
+   if(arr[h].resourceId=='g'){
+       gp++;
+   }
+   if(arr[h].resourceId=='h'){
+       hp++;
+   }
+   if(arr[h].resourceId=='i'){
+     ip++;
+   }
+   if(arr[h].resourceId=='j'){
+     jp++;
+   }
+ }
+
 
   }
-
   $(function() { // document ready
+
     /* initialize the external events
     -----------------------------------------------------------------*/
 
@@ -200,16 +223,16 @@ var config = {
 	  eventOverlap: false,//events cannot overlap
 	  events: arr,
       resources: [
-        { id: 'a', title: 'MakerBot 1' },
-        { id: 'b', title: 'MakerBot 2', eventColor: 'orange' },
-        { id: 'c', title: 'MakerBot 3', eventColor: '#af41f4' },
-		    { id: 'd', title: 'MakerBot Z18', eventColor: 'red' },
-    		{ id: 'e', title: 'Taz 6', eventColor: '#43A047' },
-        { id: 'f', title: 'Robo R1 1', eventColor: 'orange' },
-	      { id: 'g', title: 'Robo R1 2', eventColor: 'maroon' },
-	      { id: 'h', title: 'Robo R1 3', eventColor: 'purple' },
-        { id: 'i', title: 'Robo R1 4', eventColor: '#78909C' },
-        { id: 'j', title: 'Robo R2', eventColor: '#3F51B5' },
+        { id: 'a', title: 'MakerBot 1'+'\xa0\xa0\xa0\xa0'+'# of prints:'+ap},
+        { id: 'b', title: 'MakerBot 2 '+'\xa0\xa0\xa0\xa0'+'# of prints:'+bp, eventColor: 'orange' },
+        { id: 'c', title: 'MakerBot 3 '+'\xa0\xa0\xa0\xa0'+'# of prints:'+cp, eventColor: '#af41f4' },
+		    { id: 'd', title: 'MakerBot Z18 '+'\xa0\xa0\xa0\xa0'+'# of prints:'+dp, eventColor: 'red' },
+    		{ id: 'e', title: 'Taz 6 '+'\xa0\xa0\xa0\xa0'+'# of prints:'+ep, eventColor: '#43A047' },
+        { id: 'f', title: 'Robo R1 1 '+'\xa0\xa0\xa0\xa0'+'# of prints:'+(fp-2), eventColor: 'orange' },
+	      { id: 'g', title: 'Robo R1 2 '+'\xa0\xa0\xa0\xa0'+'# of prints:'+(gp-1), eventColor: 'maroon' },
+	      { id: 'h', title: 'Robo R1 3 '+'\xa0\xa0\xa0\xa0'+'# of prints:'+(hp-1), eventColor: 'purple' },
+        { id: 'i', title: 'Robo R1 4 '+'\xa0\xa0\xa0\xa0'+'# of prints:'+(ip-1), eventColor: '#78909C' },
+        { id: 'j', title: 'Robo R2 '+ '\xa0\xa0\xa0\xa0'+'# of prints:'+(jp-1), eventColor: '#3F51B5' },
       ],
       drop: function(date, jsEvent, ui, resourceId) {
         console.log('drop', date.format(), resourceId);
