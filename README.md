@@ -15,3 +15,6 @@ there are two identical firebase projects representing two environments, one for
 
 - tech-sandbox-print-queue-dev
 - tech-sandbox-print-queue-prod
+
+#usage
+
