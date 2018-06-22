@@ -420,7 +420,7 @@ if (e.keyCode === 27) {
     document.getElementById('pstart').value=event.start.format('YYYY-MM-DD hh:mm a'); //display nicely
     document.getElementById('pend').value=event.end.format('YYYY-MM-DD hh:mm a');
 
-    
+
     document.getElementById('pduration').textContent = event.end.diff(event.start, 'hours', true) + ' hours'
     modal.style.display = "block";
     var submit=document.getElementById('sub');
@@ -441,45 +441,17 @@ span.onclick = function() {
 }
 //funtion for when submit button pressed
 submit.onclick=function(){
-    var starttime;
-    var endtime;
+  event.title = document.getElementById('ptitle').value || event.title; //check for updated event title in modal. fallback to original title.
+  var startTime = document.getElementById('pstart').value || event.start;
+  var endTime = event.end = document.getElementById('pend').value || event.end;
   var h=keys[event.id];
-   titles= document.getElementById('ptitle').value;
-   console.log(titles);
-   if(titles==''){
-     titles=event.title;
-   }
-   console.log(titles);
- starts= document.getElementById('pstart').value;
-  console.log(starts);
- if(starts==''){
-   starttime=event.start.format('YYYY-MM-DD HH:mm');
- }
- else if(starts.length>5){
-   starttime=starts;
- }
- else{
-    starttime=(event.start.format('YYYY-MM-DD')+' '+starts);
- }
- console.log(starts);
- ends= document.getElementById('pend').value;
- console.log(ends);
- if(ends==''){
-   endtime=event.end.format('YYYY-MM-DD HH:mm');
- }
- else if(ends.length>5){
-   endtime=ends;
- }
- else{
-    endtime=(event.end.format('YYYY-MM-DD')+' '+ends);
- }
- console.log(ends);
- event.start = moment(starttime).format('YYYY-MM-DD HH:mm'); //save as 24hr;
- console.log(event.start);
- event.end = moment(endtime).format('YYYY-MM-DD HH:mm'); //save as 24hr;
- console.log(event.end);
- event.title = titles;
- console.log(event.title);
+
+
+ event.start = moment(startTime, 'YYYY-MM-DD hh:mm a').format('YYYY-MM-DD HH:mm'); //save as 24hr;
+ event.end = moment(endTime, 'YYYY-MM-DD hh:mm a').format('YYYY-MM-DD HH:mm'); //save as 24hr;
+ console.log("event ready to save:");
+ console.log(event);
+
  $('#calendar').fullCalendar('updateEvent',event);
     console.log(h);
      if (h==undefined){
