@@ -441,14 +441,24 @@ span.onclick = function() {
 }
 //funtion for when submit button pressed
 submit.onclick=function(){
-  event.title = document.getElementById('ptitle').value || event.title; //check for updated event title in modal. fallback to original title.
-  var startTime = document.getElementById('pstart').value || event.start;
-  var endTime = event.end = document.getElementById('pend').value || event.end;
+  event.title = document.getElementById('ptitle').value; //check for updated event title in modal. fallback to original title.
+  var pstart = moment(document.getElementById('pstart').value, "YYYY-MM-DD hh:mm a"); //parse start date field
+  var pend = moment(document.getElementById('pend').value, "YYYY-MM-DD hh:mm a"); //parse end date field
+
+  if (!pstart.isValid()) {
+    alert("invalid START date/time");
+    return;
+  }
+
+  if (!pend.isValid()) {
+    alert("invalid END date/time");
+    return;
+  }
+
   var h=keys[event.id];
 
-
- event.start = moment(startTime, 'YYYY-MM-DD hh:mm a').format('YYYY-MM-DD HH:mm'); //save as 24hr;
- event.end = moment(endTime, 'YYYY-MM-DD hh:mm a').format('YYYY-MM-DD HH:mm'); //save as 24hr;
+ event.start = pstart.format('YYYY-MM-DD HH:mm'); //save as 24hr;
+ event.end = pend.format('YYYY-MM-DD HH:mm'); //save as 24hr;
  console.log("event ready to save:");
  console.log(event);
 
