@@ -16,6 +16,10 @@ following the pattern described here https://firebase.googleblog.com/2016/07/dep
 - tech-sandbox-print-queue-dev
 - tech-sandbox-print-queue-prod
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> cec4ebf302d77a880b163a313281cc9db1d2db8c
 NOTE: currently the dev project points interacts with the production database, so be careful when testing in the dev project, your changes are live.
 
 # Usage
@@ -25,3 +29,8 @@ https://fullcalendar.io/docs/resources-array
 
 ## Updating open hours
 https://fullcalendar.io/docs/business-hours
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> cec4ebf302d77a880b163a313281cc9db1d2db8c
