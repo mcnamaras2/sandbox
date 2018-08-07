@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "default": "sandbox-ui",
+    "dev": "tech-sandbox-print-queue-dev"
+  }
+}
