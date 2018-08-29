@@ -58,6 +58,7 @@
     } else {
       // [START signout]
       firebase.auth().signOut();
+
       // [END signout]
     }
     // [START_EXCLUDE]
@@ -88,17 +89,30 @@
         // document.getElementById('quickstart-sign-in-status').textContent = 'Signed in';
         document.getElementById('quickstart-sign-in').textContent = 'Sign out';
         // [END_EXCLUDE]
+
+        //show new calendar event draggable
+        $('#external-events').show();
+        console.log('logged in');
+        $('#calendar').fullCalendar('option','editable',true);
+
       } else {
         // User is signed out.
         // [START_EXCLUDE]
         document.getElementById('email').textContent = ''
+        $('#calendar').fullCalendar('option','editable',false);
       //  document.getElementById('quickstart-sign-in-status').textContent = 'Signed out';
         document.getElementById('quickstart-sign-in').textContent = 'Sign in with Google';
+        // hide new calendar event draggable
+        $('#external-events').hide();
+        console.log('logged out');
+
+
 
         // [END_EXCLUDE]
       }
       // [START_EXCLUDE]
       document.getElementById('quickstart-sign-in').disabled = false;
+        //$('#calendar').fullCalendar('option','editable','false');
       // [END_EXCLUDE]
     });
     // [END authstatelistener]
@@ -108,7 +122,7 @@
     initApp()
     };
 </script>
-<script>
+<script type="text/javascript">
 var Name; //variable used for the event name when being pulled from db JSON
 var evstart;//variable used for the event start time/date when being pulled from db JSON
 var evend;//variable used for the event end time/date when being pulled from db JSON
@@ -301,7 +315,7 @@ var config = {
       },
       height:"auto",//set height of rendered calender, auto is set to allow for Fullcalender to determine best fit size
       //contentHeight:"auto",
-        editable: true, // enable draggable events
+        editable: false, // enable draggable events
         droppable: true, // this allows things to be dropped onto the calendar
         //aspectRatio: 3, unneeded due to height value being set
         scrollTime: scrollTime,// undo default 6am scrollTime
@@ -394,6 +408,10 @@ var config = {
 }
  },
 	  eventClick: function(event, jsEvent, view) {
+      if (!firebase.auth().currentUser) {
+        return false;
+      } else {
+
       var e;
     //  document.getElementById('info').style.visibility='visible';
     //function to submit modal print information after enter key pressed
@@ -555,7 +573,7 @@ del.onclick=function(){
       //var things=event.id-1;
 		  //var length=event.end.diff(event.start, 'minutes');
 		  //var length=(end-start);
-},
+}},
 });
 	$('#calender').fullCalendar( 'refetchEvents' );
 	$('#calendar').fullCalendar('render')
@@ -600,6 +618,7 @@ function goto(){
   }
 
   #external-events {
+    display:none;
     float: left;
     width: 9.375rem;
     height:10rem;
