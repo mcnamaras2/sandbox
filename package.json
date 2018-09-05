@@ -1,0 +1,19 @@
+{
+  "name": "tech-sandbox-printer-queue",
+  "version": "1.0.0",
+  "description": "An online print queue for technology sandbox 3d printers",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Adam-Shire-WIT/sandbox.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Adam-Shire-WIT/sandbox/issues"
+  },
+  "homepage": "https://github.com/Adam-Shire-WIT/sandbox#readme"
+}
