@@ -5,9 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sandbox Calendar</title>
   <meta charset='utf-8' />
-  <link href='css/main.css' rel='stylesheet' />
   <link href='fullcalendar-scheduler-1.9.4/lib/fullcalendar.min.css' rel='stylesheet' />
-  <link href='fullcalendar-scheduler-1.9.4/lib/fullcalendar.print.min.css' rel='stylesheet' media='print' />
   <link href='fullcalendar-scheduler-1.9.4/scheduler.min.css' rel='stylesheet' />
   <script src='fullcalendar-scheduler-1.9.4/lib/moment.min.js'></script>
   <script src='fullcalendar-scheduler-1.9.4/lib/jquery.min.js'></script>
@@ -19,6 +17,7 @@
   <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-database.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/printer-queue.js"></script>
+
 </head>
 
 <body>
@@ -27,17 +26,6 @@
   </div>
   <br>
 
-  <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
-
-
-    <main class="mdl-layout__content mdl-color--grey-100">
-      <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
-
-
-      </div>
-      <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-
-        <!-- Button that handles sign-in/sign-out -->
         <div>signed in as: <span id="email"></span></div>
 
         <button disabled class="mdl-button mdl-js-button mdl-button--raised" id="quickstart-sign-in">Sign in with Google</button>
@@ -53,7 +41,7 @@
   <div id='wrap'>
     <div id='external-events'>
       <h4>Drag me onto the calendar!</h4>
-      <div class='fc-event' data-duration="00:15:00">Print: Name</div>
+      <div class='fc-event' data-duration="00:30:00">Print: Name</div>
       <div>
         <button type="button" onclick="goto()" > Go to Date</button></a>
       </div>
@@ -93,6 +81,7 @@
     </div>
   </div>
 
+  <script src="https://sandbox-ui.firebaseio.com/sandbox-ui/events.json?callback=gotData"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"> </script>
 </body>
 
