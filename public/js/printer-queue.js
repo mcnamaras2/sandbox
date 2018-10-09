@@ -35,12 +35,13 @@ var jp = 0;
 //url: 'https://sandbox-ui.firebaseio.com/sandbox-ui/events.json';
 //config info for the firebase database
 const config = {
-  apiKey: "AIzaSyC3Ftg4K-Z3nQmu3Cpsrya7mKSUBGde6Gc",
-  authDomain: "tech-sandbox-print-queue-dev.firebaseapp.com",
-  databaseURL: "https://tech-sandbox-print-queue-dev.firebaseio.com",
-  projectId: "tech-sandbox-print-queue-dev",
-  storageBucket: "tech-sandbox-print-queue-dev.appspot.com",
-  messagingSenderId: "699879071054"
+  apiKey: "AIzaSyD7WKW8wD07hQ4fTA_gUT3xHFCUVOGqR4E",
+    authDomain: "sandbox-ui.firebaseapp.com",
+    databaseURL: "https://sandbox-ui.firebaseio.com",
+    projectId: "sandbox-ui",
+    storageBucket: "sandbox-ui.appspot.com",
+    messagingSenderId: "1064917041181"
+
 };
 firebase.initializeApp(config);
 var database = firebase.database();
@@ -221,7 +222,7 @@ $(function() { // document ready
     resourceAreaHeight: '100%',
     eventOverlap: false, //events cannot overlap
     events: function(start, end, timezone, callback) {
-      $.getJSON(`https://tech-sandbox-print-queue-dev.firebaseio.com/events.json`).done(function(data) {
+      $.getJSON(`https://sandbox-ui.firebaseio.com/events.json`).done(function(data) {
         var events = [];
         if (data) {
           events = Object.keys(data).map(function(k) { // build an array of event objects from JS object
