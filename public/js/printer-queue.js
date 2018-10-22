@@ -34,6 +34,7 @@ var ip = 0;
 var jp = 0;
 //url: 'https://sandbox-ui.firebaseio.com/sandbox-ui/events.json';
 //config info for the firebase database
+
 const config = {
   apiKey: "AIzaSyD7WKW8wD07hQ4fTA_gUT3xHFCUVOGqR4E",
     authDomain: "sandbox-ui.firebaseapp.com",
@@ -176,6 +177,7 @@ $(function() { // document ready
   /* initialize the calendar
     -----------------------------------------------------------------*/
 
+
   var scrollTime = moment().format("HH:mm");
   //setting database to be the reference to our events node
   $('#calendar').fullCalendar({
@@ -204,6 +206,7 @@ $(function() { // document ready
     },
     height: "auto", //set height of rendered calender, auto is set to allow for Fullcalender to determine best fit size
     //contentHeight:"auto",
+
     selectable: true, //can select times on the calendar
     selectOverlap: false, //can't select if there is an event there already
     editable: false, // enable draggable events
@@ -317,10 +320,12 @@ $(function() { // document ready
     },
     eventResize: function(event) {
       updateDatabase(event);
+
     },
     eventClick: function(event, jsEvent, view) {
       if (!firebase.auth().currentUser) {
         return false;
+
       }
       //set values in modal form
       document.getElementById('ptitle').value = event.title; //set title field
@@ -346,17 +351,3 @@ $(function() { // document ready
   $('#calender').fullCalendar('refetchEvents');
   console.log("refetching Events");
 });
-  /*function goto() {
-  //goes to specified date
-  var date = prompt('Enter date:', 'YYYY-MM-DD', {
-    buttons: {
-      Ok: true,
-      Cancel: false
-    }
-  });
-  $('#calendar').fullCalendar('gotoDate', date);
-  //rerendering events, with new event data after updates
-  $("#calendar").fullCalendar('removeEvents');
-  $("#calendar").fullCalendar('addEventSource', arr);
-  $('#calendar').fullCalendar('rerenderEvents');
-} */
