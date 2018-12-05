@@ -7,129 +7,206 @@
 </head>
 
 <body>
+  <div id="duration"></div>
   <div id="stack"></div>
   <div id="bar"></div>
+
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/1.40.1/plotly.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
   <script>
-  const printerNames = {
-a: 'Makerbot 1',
-b: 'Makerbot 2',
-c: 'Makerbot 3',
-d: 'Makerbot Z18',
-e: 'Taz 6',
-f: 'Robo R1 #1',
-g: 'Robo R1 #2',
-h: 'Robo R1 #3',
-i: 'Robo R1 #4',
-j: 'Robo R2'
-}
-
-
-
-var getJSON = function(url) {
-return new Promise((resolve, reject) => {
-  const xhr = new XMLHttpRequest();
-  xhr.open("GET", url);
-  xhr.onload = () => resolve(xhr.responseText);
-  xhr.onerror = () => reject(xhr.statusText);
-  xhr.send();
-});
-};
-
-getJSON("https://sandbox-ui.firebaseio.com/events.json")
-.then(function(results) {
-  var data = JSON.parse(results);
-
-  var events = Object.values(data).map(function(event) {
-
-    event.date = moment(event.start).format("YYYY-MM");
-    return event;
-  });
-
-
-
-//remove events that don't have a wit email address
-
-events = events.filter(event => event.title.search('@wit.edu') != -1)
-
-var dateList = [...new Set(events.map(item => item.date))].sort() // Use the spread operator to transform a set into an Array.;
-console.log(dateList)
-
-
-  console.log(events[2]);
-
-  var printers = [];
-  events.forEach(function(event) {
-    var printer = event.resourceId;
-    var date = event.date;
-
-    //check if printer exists in our printer array
-    if (!printers[printer]) {
-      printers[printer] = {
-        //create a new printer object if it doesn't exist
-        x: dateList,
-        y: Array(dateList.length).fill(0),
-        name: printerNames[printer],
-        type:"bar"
-      };
+    const printerNames = {
+      a: 'Makerbot 1',
+      b: 'Makerbot 2',
+      c: 'Makerbot 3',
+      d: 'Makerbot Z18',
+      e: 'Taz 6',
+      f: 'Robo R1 #1',
+      g: 'Robo R1 #2',
+      h: 'Robo R1 #3',
+      i: 'Robo R1 #4',
+      j: 'Robo R2'
     }
-    //console.log(printers[printer].x)
-    var dateIndex = printers[printer].x.indexOf(date)
 
-    //console.log(dateIndex)
 
-    printers[printer].y[dateIndex]++; //index into the current month of the y array and increment
-  });
 
-  printers = Object.values(printers)
+    var getJSON = function(url) {
+      return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", url);
+        xhr.onload = () => resolve(xhr.responseText);
+        xhr.onerror = () => reject(xhr.statusText);
+        xhr.send();
+      });
+    };
 
-//sort the printer objects
+    getJSON("https://sandbox-ui.firebaseio.com/events.json")
+      .then(function(results) {
+        var data = JSON.parse(results);
 
-      function compare(a, b) {
+        var events = Object.values(data).map(function(event) {
 
-        const printerA = a.name
-        const printerB = b.name
+          event.date = moment(event.start).format("YYYY-MM");
+          event.duration = moment(event.end).diff(event.start, 'hours', true)
+          return event;
+        });
 
-        let comparison = 0;
-        if (printerA > printerB) {
-          comparison = 1;
-        } else if (printerA < printerB) {
-          comparison = -1;
+
+
+
+        //remove events that don't have a wit email address
+
+        events = events.filter(event => event.title.search('@wit.edu') != -1)
+        events = events.filter(event => event.duration > 0)
+
+        // Use the spread operator to transform a set into an Array of dates of print events.
+        //using Set in order to get unique values for item.date
+        var dateList = [...new Set(events.map(item => item.date))].sort();
+        console.log(dateList)
+
+
+        console.log(events[2]);
+
+
+        //create a chart showing monthly duration of prints for all printers
+        var durationEvents = [];
+        var durationDates = [];
+
+        events.forEach(function(event) {
+          durationEvents.push(event.duration);
+          durationDates.push(event.date);
+        });
+
+
+
+        var trace1 = {
+          name: 'Print Hours',
+          x: durationDates,
+          y: durationEvents,
+          type: 'bar',
+          transforms: [{
+            type: 'aggregate',
+            groups: durationDates,
+            aggregations: [{
+              target: 'y',
+              func: 'sum',
+              enabled: true
+            }, ]
+          }]
+        };
+        var trace2 = {
+          name: "Print Jobs",
+          x: durationDates,
+          y: durationEvents,
+          type: 'bar',
+          transforms: [{
+            type: 'aggregate',
+            groups: durationDates,
+            aggregations: [{
+              target: 'y',
+              func: 'count',
+              enabled: true
+            }, ]
+          }]
+        };
+
+        durationData = [trace1, trace2]
+        console.log(durationData)
+
+        Plotly.newPlot("duration", durationData, {
+          xaxis: {
+            type: "date",
+            tickmode: "linear",
+            dtick: "M1"
+          },
+          yaxis: {
+            title: 'Monthly Totals'
+          }
+
+        });
+
+
+
+
+        var printers = [];
+        events.forEach(function(event) {
+          var printer = event.resourceId;
+          var date = event.date;
+
+          //check if printer exists in our printer array
+          if (!printers[printer]) {
+            printers[printer] = {
+              //create a new printer object if it doesn't exist
+              x: dateList, //an array with an item for each print event. Each printer object has the same dateList.
+              y: Array(dateList.length).fill(0), //an array with one item per unique date value (YYYY-MM)
+              name: printerNames[printer],
+              type: "bar"
+            };
+          }
+          //console.log(printers[printer].x)
+          var dateIndex = printers[printer].x.indexOf(date)
+
+          //console.log(dateIndex)
+          //for the printer in the current event object, increment the value of the y array that matches the date of the current event in the foreach loop
+          printers[printer].y[dateIndex]++; //index into the current month/year of the y array and increment value
+        });
+
+        printers = Object.values(printers)
+
+        //declare a function to sort the printer objects by name
+
+        function compare(a, b) {
+
+          const printerA = a.name
+          const printerB = b.name
+
+          let comparison = 0;
+          if (printerA > printerB) {
+            comparison = 1;
+          } else if (printerA < printerB) {
+            comparison = -1;
+          }
+          return comparison;
         }
-        return comparison;
-      }
 
-      printers.sort(compare) // sort the printers array by printerName
+        printers.sort(compare) // pass the compare function to the sort method to sort the printers array by printerName
 
 
 
 
-  var stacks = printers;
+        var stacks = printers;
+        console.log(stacks)
 
-  var layout = {
-    barmode: "stack",
-    xaxis: {
-      type:"date",
-      tickmode:"linear",
-      dtick:"M1"
-    },
-  };
+        var layout = {
+          barmode: "stack",
+          xaxis: {
+            type: "date",
+            tickmode: "linear",
+            dtick: "M1"
+          },
+          yaxis: {
+            title: 'number of prints',
+          }
+        };
 
-  Plotly.newPlot("stack", stacks, layout);
-Plotly.newPlot("bar", stacks, {xaxis: {
-  type:"date",
-  tickmode:"linear",
-  dtick:"M1"
-}});
-})
-.catch(function(err) {
-  console.error("Augh, there was an error!", err.statusText);
-});
+        Plotly.newPlot("stack", stacks, layout);
+        Plotly.newPlot("bar", stacks, {
+          xaxis: {
+            type: "date",
+            tickmode: "linear",
+            dtick: "M1"
+          },
+          yaxis: {
+            title: 'number of prints',
+          }
+        });
+      })
+      .catch(function(err) {
+        console.error("Augh, there was an error!", err.statusText);
+      });
 
-/* Current Plotly.js version */
-//console.log( Plotly.BUILD );
+    /* Current Plotly.js version */
+    //console.log( Plotly.BUILD );
   </script>
 </body>
 
