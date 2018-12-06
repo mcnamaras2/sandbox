@@ -81,12 +81,13 @@
 
         var trace1 = {
           name: 'Print Hours',
-          x: durationDates,
+          x: durationDates.sort(),
           y: durationEvents,
           type: 'bar',
+
           transforms: [{
             type: 'aggregate',
-            groups: durationDates,
+            groups: durationDates.sort(),
             aggregations: [{
               target: 'y',
               func: 'sum',
@@ -95,10 +96,16 @@
           }]
         };
         var trace2 = {
+
           name: "Print Jobs",
+
           x: durationDates,
           y: durationEvents,
-          type: 'bar',
+          yaxis: 'y2',
+          type: 'scatter',
+          mode: 'markers+lines',
+          line: {width: 10},
+          marker:{size: 20},
           transforms: [{
             type: 'aggregate',
             groups: durationDates,
@@ -114,13 +121,24 @@
         console.log(durationData)
 
         Plotly.newPlot("duration", durationData, {
+
+          showlegend: true,
+
           xaxis: {
             type: "date",
             tickmode: "linear",
             dtick: "M1"
           },
           yaxis: {
-            title: 'Monthly Totals'
+            title: 'Print Duration'
+          },
+          yaxis2: {
+            title: 'Print Jobs',
+            showline: false,
+            zeroline:false,
+            showgrid:false,
+            overlaying: 'y',
+            side: 'right'
           }
 
         });
