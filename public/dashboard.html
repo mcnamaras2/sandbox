@@ -2,11 +2,15 @@
 <html>
 
 <head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
 
 
 </head>
 
 <body>
+  <h1>Technology Sandbox</h1>
+  <h2>3D Printing Statistics</h2>
   <div id="duration"></div>
   <div id="stack"></div>
   <div id="bar"></div>
@@ -141,7 +145,7 @@
             side: 'right'
           }
 
-        });
+        },{ responsive: true });
 
 
 
@@ -207,7 +211,7 @@
           }
         };
 
-        Plotly.newPlot("stack", stacks, layout);
+        Plotly.newPlot("stack", stacks, layout,{ responsive: true });
         Plotly.newPlot("bar", stacks, {
           xaxis: {
             type: "date",
@@ -217,7 +221,7 @@
           yaxis: {
             title: 'number of prints',
           }
-        });
+        },{ responsive: true });
       })
       .catch(function(err) {
         console.error("Augh, there was an error!", err.statusText);
